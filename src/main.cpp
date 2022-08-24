@@ -14,20 +14,30 @@
  */
 
 #include "cmdline.hpp"
+#include "utils/log.hpp"
+#include "classloader/FileLoader.hpp"
+
+using namespace cocotools;
 
 int main(int argc, char *argv[]) {
     CommandOptions cmd(argc, argv);
 
     // test command options
-    printf("Main Class: %s\n", cmd.mainClassName.c_str());
-    printf("Class Path: %s\n", cmd.classPath.c_str());
-    printf("JRE Path: %s\n", cmd.classPath.c_str());
-    printf("Main Class Arguments: ");
-    for (int i = 0; i < cmd.args.size(); ++i) {
-        if (i > 0) printf(", ");
-        printf("%s", cmd.args[i].c_str());
+    Log::info("Main Class: %s", cmd.mainClassName.c_str());
+    Log::info("Class Path: %s", cmd.classPath.c_str());
+    Log::info("JRE Path: %s", cmd.jrePath.c_str());
+
+    // Load Classes
+    coconut::FileLoader fileLoader(cmd.jrePath, cmd.classPath);
+    unsigned char* testPool = new unsigned char[2*1024*1024+10];
+    int byteNum = fileLoader.readClassFile(cmd.mainClassName, testPool);
+    if (byteNum > 0) {
+        Log::info("Total bytes: %d", byteNum);
+        for (int i = 0; i < byteNum; i++) {
+            printf("%d ", testPool[i]);
+        }
     }
-    printf("\n");
+    delete[] testPool;
 
     return 0;
 }

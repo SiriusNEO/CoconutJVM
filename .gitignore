@@ -1,2 +1,6 @@
 .vscode/
 coconut
+lib/*
+!lib/README
+testclasses/
+testwc/

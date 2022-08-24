@@ -10,16 +10,14 @@
 #include <vector>
 #include <cstdio>
 
+#include "utils/panic.hpp"
+
 #define VERSION "coconut 0.1dev"
 
-#define DEFAULT_CP "."
+#define DEFAULT_CP "./"
 #define DEFAULT_MAINCN "Main.class"
-#define DEFAULT_JREPATH "../../jre/"
+#define DEFAULT_JREPATH "./"
 
-void cmdlinePanic(const char* message) {
-    printf("coconut: %s\n", message);
-    exit(1);
-}
 
 class CommandOptions {
     public:
@@ -41,7 +39,7 @@ class CommandOptions {
         mainClassName(DEFAULT_MAINCN), 
         args() {
             if (argc <= 1) {
-                cmdlinePanic("error: no argument.");
+                cocotools::panic("error: no argument.");
             } 
 
             for (int i = 1; i < argc; ++i) {
@@ -62,14 +60,14 @@ class CommandOptions {
                 else if (std::strcmp(_argv[i], "--class-path") == 0) {
                     ++i;
                     if (i == _argc) {
-                        cmdlinePanic("error: --class-path requires class path specification");
+                        cocotools::panic("error: --class-path requires class path specification");
                     }
                     classPath = std::string(_argv[i]);
                 }
                 else if (std::strcmp(_argv[i], "--jre-path") == 0) {
                     ++i;
                     if (i == _argc) {
-                        cmdlinePanic("error: --jre-path requires jre path specification");
+                        cocotools::panic("error: --jre-path requires jre path specification");
                     }
                     jrePath = std::string(_argv[i]);
                 }
