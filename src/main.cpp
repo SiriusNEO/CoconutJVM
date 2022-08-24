@@ -9,7 +9,7 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * coconut is a toy Java Veritual Machine by SiriusNEO for learning purposes.
+ * coconut is a toy JVM(Java Veritual Machine) by SiriusNEO for learning purposes.
  * chaosfunc@gmail.com.                   2022 8.24
  */
 

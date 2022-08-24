@@ -1,6 +1,7 @@
 /*
- *  FileLoader: from local file loading class information ([]byte)
- *  Support format: directory, zip/jar 
+ *  FileLoader: 
+ *      from local file loading java class information ([]byte)
+ *      Support format: directory, zip/jar 
  */
 
 #pragma once
@@ -18,6 +19,7 @@
 #include "../utils/split.hpp"
 #include "../utils/panic.hpp"
 #include "../utils/log.hpp"
+#include "../utils/typedef.hpp"
 
 #include "../../3rdparty/zip/zip.h"
 
@@ -26,8 +28,6 @@ namespace coconut {
 using namespace cocotools;
 
 class FileLoader {
-    
-    typedef unsigned char BYTE;
 
     private:
         static const int MAX_PATH_NUM = 10;
