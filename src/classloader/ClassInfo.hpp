@@ -33,12 +33,18 @@ struct FieldInfo {
         attributes = new Attributes(reader, cp);
     }
 
+    FieldInfo(FieldInfo&& other): 
+    cp(other.cp), accessFlags(other.accessFlags), nameIdx(other.nameIdx), descriptorIdx(other.descriptorIdx) {
+        attributes = other.attributes;
+        other.attributes = nullptr;
+    }
+
     std::string fieldName() const {
         return cp->getLiteral(nameIdx);
     } 
 
     ~FieldInfo() {
-        // delete attributes;
+        if (attributes != nullptr) delete attributes;
     }
 };
 
@@ -96,6 +102,7 @@ public:
         for (uint16_t i = 1; i < cpCount; ++i) {
             // 1-based
             cp->infoList[i] = parseSingleConstantInfo(reader, cp);
+            cp->infoNum++;
             if (cp->infoList[i]->tag == CONSTANT_TAG_Long || 
                 cp->infoList[i]->tag == CONSTANT_TAG_Double) {
                     // notice: long and double take two positions
@@ -133,7 +140,7 @@ public:
 
     ~ClassInfo() {
         delete cp;
-        // delete attributes;
+        delete attributes;
     }
 
     std::string className() const {

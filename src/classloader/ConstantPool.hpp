@@ -130,11 +130,12 @@ struct ConstantRefInfo: public ConstantInfo {
 struct ConstantPool {
     
     uint16_t infoNum;
+    uint16_t cpCount;
     ConstantInfo**  infoList;
     
-    ConstantPool(uint16_t _infoNum): infoNum(_infoNum) {
-        infoList = new ConstantInfo* [infoNum];
-        for (int i = 0; i < infoNum; ++i) infoList[i] = nullptr;
+    ConstantPool(uint16_t _cpCount): infoNum(0), cpCount(_cpCount) {
+        infoList = new ConstantInfo* [cpCount];
+        for (int i = 0; i < cpCount; ++i) infoList[i] = nullptr;
     }
 
     ~ConstantPool() {
