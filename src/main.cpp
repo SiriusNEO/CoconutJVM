@@ -16,8 +16,12 @@
 #include "cmdline.hpp"
 #include "utils/log.hpp"
 #include "classloader/FileLoader.hpp"
+#include "classloader/ClassInfo.hpp"
 
+using namespace coconut;
 using namespace cocotools;
+
+#define MAX_CLASSFILE_SIZE 1048576  // 1MB
 
 int main(int argc, char *argv[]) {
     CommandOptions cmd(argc, argv);
@@ -28,16 +32,11 @@ int main(int argc, char *argv[]) {
     Log::info("JRE Path: %s", cmd.jrePath.c_str());
 
     // Load Classes
-    coconut::FileLoader fileLoader(cmd.jrePath, cmd.classPath);
-    unsigned char* testPool = new unsigned char[2*1024*1024+10];
-    int byteNum = fileLoader.readClassFile(cmd.mainClassName, testPool);
-    if (byteNum > 0) {
-        Log::info("Total bytes: %d", byteNum);
-        for (int i = 0; i < byteNum; i++) {
-            printf("%d ", testPool[i]);
-        }
-    }
-    delete[] testPool;
+    FileLoader fileLoader(cmd.jrePath, cmd.classPath);
+    ByteReader classFileReader(MAX_CLASSFILE_SIZE);
+    fileLoader.loadClassFile(cmd.mainClassName, classFileReader.bytePool);
+    ClassInfo classInfo(classFileReader);
+    classInfo.display();
 
     return 0;
 }

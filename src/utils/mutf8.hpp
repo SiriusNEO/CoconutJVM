@@ -32,7 +32,8 @@ std::string decodeMUTF8FromBytes(const std::vector<BYTE>& bytesStream) {
     // Notice: this only support utf-8
     // return std::string(bytesStream.begin(), bytesStream.end());
 
-    // this code seems to work, but notice the supplementary character.
+    // this code seems to work.
+    // return std::string(utf8) can be directly printed in console
 
     int ptr = 0;
     utf16_t* utf16_buffer = new utf16_t[bytesStream.size()];

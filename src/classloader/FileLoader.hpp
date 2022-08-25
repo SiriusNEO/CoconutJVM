@@ -84,7 +84,7 @@ class FileLoader {
                     }
                 }
 
-                int readClassFile(const std::string& className, BYTE* buf) {
+                int loadClassFile(const std::string& className, BYTE* buf) {
                     if (!openFlag) {
                         panic("read in closed entry.");
                     }
@@ -216,9 +216,9 @@ class FileLoader {
             }
         }
 
-        int readClassFile(const std::string& className, BYTE* buf) {
+        int loadClassFile(const std::string& className, BYTE* buf) {
             for (auto& entry: entries) {
-                int ret = entry.readClassFile(className, buf);
+                int ret = entry.loadClassFile(className, buf);
                 if (ret > 0) return ret;
             }
             return -1;
