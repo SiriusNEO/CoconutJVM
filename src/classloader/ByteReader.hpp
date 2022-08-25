@@ -8,6 +8,7 @@
 
 #include "../utils/panic.hpp"
 #include "../utils/typedef.hpp"
+#include <vector>
 
 namespace coconut {
 
@@ -44,10 +45,10 @@ class ByteReader {
         }
 
         
-        void fetchBytes(int byteNum, BYTE* buffer) {
+        void fetchBytes(int byteNum, std::vector<BYTE>& buffer) {
             checkOverflow(byteNum);
             for (int i = 0; i < byteNum; ++i, ++startIdx) {
-                buffer[i] = bytePool[startIdx];
+                buffer.push_back(bytePool[startIdx]);
             }
         }
 
@@ -58,12 +59,12 @@ class ByteReader {
             return ret;
         }
 
-        void fetchU2List(uint16_t* buffer) {
+        void fetchU2List(std::vector<uint16_t>& buffer) {
             checkOverflow(1);
             uint16_t n = this->fetchU2();
             checkOverflow(2*n);
             for (uint16_t i = 0; i < n; ++i, startIdx+=2) {
-                buffer[i] = *((uint16_t*)(bytePool+startIdx));
+                buffer.push_back(*((uint16_t*)(bytePool+startIdx)));
             }
         }
 

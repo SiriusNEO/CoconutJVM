@@ -114,7 +114,7 @@ void parseSingleConstantInfoFromBytes(ByteReader reader) {
             break;
         }
         case CONSTANT_TAG_MethodHandle:case CONSTANT_TAG_MethodType:case CONSTANT_TAG_InvokeDynamic: {
-            panic("Unimplemented constant pool tag.")
+            panic("Unimplemented constant pool tag.");
             break;
         }
     }

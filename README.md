@@ -12,3 +12,5 @@ A toy JVM (Java Bytecode Interpreter) for learning purpose.
 ### 3rd party
 
 - C++ zip library: https://github.com/kuba--/zip
+
+- utf8-utf16 converter library: https://github.com/Davipb/utf8-utf16-converter

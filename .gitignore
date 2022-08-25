@@ -4,3 +4,4 @@ lib/*
 !lib/README
 testclasses/
 testwc/
+testing/test

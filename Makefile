@@ -3,7 +3,7 @@ COMPILER = g++
 SRC_DIR = src
 3RDPARTY_DIR = 3rdparty
 
-SRC_FILES = $(3RDPARTY_DIR)/zip/zip.c $(SRC_DIR)/main.cpp
+SRC_FILES = $(3RDPARTY_DIR)/zip/zip.c $(3RDPARTY_DIR)/utf16/convert.c $(SRC_DIR)/main.cpp
 
 build:
 	$(COMPILER) $(SRC_FILES) -o coconut -O2
