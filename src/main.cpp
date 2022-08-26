@@ -36,7 +36,8 @@ int main(int argc, char *argv[]) {
     ByteReader classFileReader(MAX_CLASSFILE_SIZE);
     fileLoader.loadClassFile(cmd.mainClassName, classFileReader.bytePool);
     ClassInfo classInfo(classFileReader);
-    classInfo.display();
+    // classInfo.display();
+    Log::info("jvm end");
 
     return 0;
 }

@@ -108,6 +108,7 @@ class FileLoader {
                             if (zip_entry_noallocread(zip, (void *) buf, buf_size) < 0) {
                                 panic("load class: %s error", classLocation.c_str());
                             }
+                            zip_entry_close(zip);
                             return buf_size;
                         }
                     }

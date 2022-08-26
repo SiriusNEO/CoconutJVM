@@ -18,10 +18,10 @@ namespace cocotools {
 #define UTF_BUFFER 12
 
 std::string Utf16fromBytes(utf16_t* bytes, size_t size) {
-    utf8_t  utf8_bc[size << 2];
-    size_t utf8_size = utf16_to_utf8(bytes, size, utf8_bc, size << 2);
-    auto ret = std::string(utf8_bc, utf8_bc + utf8_size);
-    return ret;
+    size_t utf8_max_len = (size << 2) + 1;
+    utf8_t utf8_bc[utf8_max_len];
+    size_t utf8_size = utf16_to_utf8(bytes, size, utf8_bc, utf8_max_len);
+    return std::string(utf8_bc, utf8_bc + utf8_size);
 }
 
 void DECODE_ERROR() {

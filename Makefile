@@ -6,7 +6,7 @@ SRC_DIR = src
 SRC_FILES = $(3RDPARTY_DIR)/zip/zip.c $(3RDPARTY_DIR)/utf16/converter.c $(SRC_DIR)/main.cpp
 
 build:
-	$(COMPILER) $(SRC_FILES) -o coconut -g -O2
+	$(COMPILER) $(SRC_FILES) -o coconut -fsanitize=address -O2
 	echo 'coconut build finish'
 
 run:

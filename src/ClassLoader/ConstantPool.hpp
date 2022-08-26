@@ -34,6 +34,8 @@ struct ConstantInfo {
     uint8_t  tag;
 
     ConstantInfo(uint8_t _tag): tag(_tag) {}
+
+    virtual ~ConstantInfo() {}
 };
 
 struct ConstantPool;
@@ -82,8 +84,9 @@ struct ConstantUtf8Info: public ConstantInfo {
         std::vector<BYTE> bytesBuffer;
         size_t length = size_t(reader.fetchU2());
         reader.fetchBytes(length, bytesBuffer);
+        // this cause MemoryLeak: why?
         val = decodeMUTF8FromBytes(bytesBuffer);
-        // Log::info("decode: %s\n", val.c_str());
+        // Log::info("decode: %s", val.c_str());
     }
 };
 
@@ -140,7 +143,7 @@ struct ConstantPool {
 
     ~ConstantPool() {
         if (infoList != nullptr) {
-            for (int i = 0; i < infoNum; ++i) 
+            for (int i = 0; i < cpCount; ++i) 
                 if (infoList[i] != nullptr) {
                     delete infoList[i];
                 }

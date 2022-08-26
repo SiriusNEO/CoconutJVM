@@ -38,6 +38,8 @@ struct AttributeInfo {
 
     AttributeInfo(int _namePos) : namePos(_namePos) {}
 
+    virtual ~AttributeInfo() {}
+
     std::string getName() const { return ATTRIBUTES_NAMES[namePos]; }
 };
 

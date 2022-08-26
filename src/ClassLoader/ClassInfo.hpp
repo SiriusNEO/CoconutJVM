@@ -71,7 +71,7 @@ public:
     Attributes* attributes;
 
     // bytes -> java class info (parse java info from bytes)
-    ClassInfo(ByteReader& reader) {
+    ClassInfo(ByteReader& reader): cp(nullptr), attributes(nullptr) {
         /* 
          *  1. check magic number
          */
@@ -139,8 +139,12 @@ public:
     }
 
     ~ClassInfo() {
-        delete cp;
-        delete attributes;
+        if (cp != nullptr) {
+            delete cp;
+        }
+        if (attributes != nullptr) {
+            delete attributes;
+        }
     }
 
     std::string className() const {
