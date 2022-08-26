@@ -13,10 +13,10 @@
  * chaosfunc@gmail.com.                   2022 8.24
  */
 
-#include "cmdline.hpp"
+#include "Cmdline.hpp"
 #include "utils/log.hpp"
-#include "classloader/FileLoader.hpp"
-#include "classloader/ClassInfo.hpp"
+#include "ClassLoader/FileLoader.hpp"
+#include "ClassLoader/ClassInfo.hpp"
 
 using namespace coconut;
 using namespace cocotools;
