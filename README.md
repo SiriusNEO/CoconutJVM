@@ -1,5 +1,16 @@
-# coconut
-A toy JVM (Java Bytecode Interpreter) for learning purpose.
+# CoconutJVM
+
+A toy JVM (Java Virtual Machine). Just for learning purpose.
+
+## About
+
+### About the project
+
+This toy is created during my summer vacation. I began to be interested in JVM when I am working on JIT (Just-In-Time Compilation) and I am curious about its architecture and implementation.
+
+### About the name
+
+We all know that Java is named after "Java Coffee", which is also a small Indonesian island. As a tropical island, it produces not only coffee but also coconuts in abundance. And that is why I choose the name "coconut" for this JVM.
 
 ## References
 
