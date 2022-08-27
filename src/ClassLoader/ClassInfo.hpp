@@ -101,7 +101,7 @@ public:
         // notice: cpCnt - 1
         for (uint16_t i = 1; i < cpCount; ++i) {
             // 1-based
-            cp->infoList[i] = parseSingleConstantInfo(reader, cp);
+            cp->infoList[i] = constantInfoFactory(reader, cp);
             cp->infoNum++;
             if (cp->infoList[i]->tag == CONSTANT_TAG_Long || 
                 cp->infoList[i]->tag == CONSTANT_TAG_Double) {

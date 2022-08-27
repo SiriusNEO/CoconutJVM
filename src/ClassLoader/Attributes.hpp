@@ -43,7 +43,7 @@ struct AttributeInfo {
     std::string getName() const { return ATTRIBUTES_NAMES[namePos]; }
 };
 
-AttributeInfo* parseSingleAttributeInfo(ByteReader& reader, ConstantPool* cp);
+AttributeInfo* attributeInfoFactory(ByteReader& reader, ConstantPool* cp);
 
 struct Attributes {
     uint16_t attributesNum;
@@ -55,7 +55,7 @@ struct Attributes {
         list = new AttributeInfo*[attributesNum];
 
         for (uint16_t i = 0; i < attributesNum; ++i) {
-            list[i] = parseSingleAttributeInfo(reader, cp);
+            list[i] = attributeInfoFactory(reader, cp);
         }
     }
 
@@ -202,7 +202,7 @@ struct UnimplementedAttr: public AttributeInfo {
     }
 };
 
-AttributeInfo* parseSingleAttributeInfo(ByteReader& reader, ConstantPool* cp) {
+AttributeInfo* attributeInfoFactory(ByteReader& reader, ConstantPool* cp) {
     uint16_t attrNameIdx = reader.fetchU2();
     uint32_t attrLen = reader.fetchU4();
     std::string attrName = cp->getLiteral(attrNameIdx);

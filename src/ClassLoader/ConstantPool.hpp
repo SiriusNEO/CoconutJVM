@@ -172,7 +172,7 @@ struct ConstantPool {
 
 
 // from bytes get single ConstantInfo
-ConstantInfo* parseSingleConstantInfo(ByteReader& reader, ConstantPool* cp) {
+ConstantInfo* constantInfoFactory(ByteReader& reader, ConstantPool* cp) {
     uint8_t tag = reader.fetchU1();
     switch (tag) {
         case CONSTANT_TAG_Utf8: {

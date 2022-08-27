@@ -10,11 +10,17 @@
 
 namespace coconut {
 
+// prevent cross-include
+struct Thread;
+
 class JVMStack;
 
 struct StackFrame {
     LocalVariableTable*   localVariableTable;
     OperandStack*         operandStack;
+    Thread*               thread;
+    int                   nextPc;
+
 
     StackFrame(unsigned int maxLocals, unsigned int maxStack, StackFrame* _lowFrame): lowFrame(_lowFrame) {
         localVariableTable = new LocalVariableTable(maxLocals);
