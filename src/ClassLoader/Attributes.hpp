@@ -103,7 +103,7 @@ struct CodeAttr: public AttributeInfo {
     }
 
     ~CodeAttr() {
-        delete code;
+        delete[] code;
         delete attributes;
     }
 };
