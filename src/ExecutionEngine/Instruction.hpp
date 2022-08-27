@@ -1,5 +1,6 @@
 /*
  *  Java Bytecode Instruction Base Class
+ *  and FrameExecutor: a wrapper for StackFrame, used to help instructions be executed
  */
 
 #pragma once

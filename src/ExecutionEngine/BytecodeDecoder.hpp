@@ -1,3 +1,8 @@
+/*
+ *  Java Bytecode Decoder
+ *  It can: 1. decode by opcode  2. fetch operands
+ */
+
 #include "Instruction.hpp"
 #include "Instructions/Comparisons.hpp"
 #include "Instructions/Constants.hpp"
@@ -10,6 +15,9 @@
 #include "Instructions/Reversed.hpp"
 #include "Instructions/Stack.hpp"
 #include "Instructions/Stores.hpp"
+
+
+#pragma once
 
 namespace coconut {
 
