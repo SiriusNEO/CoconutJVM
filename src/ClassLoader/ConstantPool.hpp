@@ -7,9 +7,7 @@
 
 #include "../utils/typedef.hpp"
 #include "../utils/mutf8.hpp"
-#include "ByteReader.hpp"
-#include <string>
-#include <vector>
+#include "../utils/ByteReader.hpp"
 
 namespace coconut {
 

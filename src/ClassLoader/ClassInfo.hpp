@@ -5,11 +5,8 @@
 
 #pragma once
 
-#include "ByteReader.hpp"
 #include "ConstantPool.hpp"
 #include "Attributes.hpp"
-#include "../utils/panic.hpp"
-#include <vector>
 
 namespace coconut {
 

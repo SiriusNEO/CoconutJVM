@@ -77,7 +77,7 @@ struct CodeAttr: public AttributeInfo {
     ConstantPool*  cp;
     uint16_t       maxStack;
     uint16_t       maxLocals;
-    std::vector<BYTE>  code;
+    BYTE*          code;
     std::vector<ExceptionTableEntry> exceptionTable;
     Attributes*    attributes;
 
@@ -86,6 +86,7 @@ struct CodeAttr: public AttributeInfo {
         maxLocals = reader.fetchU2();
 
         uint32_t codeLen = reader.fetchU4();
+        code = new BYTE[codeLen];
         reader.fetchBytes(codeLen, code);
 
         uint16_t exceptionTableLen = reader.fetchU2();
@@ -102,6 +103,7 @@ struct CodeAttr: public AttributeInfo {
     }
 
     ~CodeAttr() {
+        delete code;
         delete attributes;
     }
 };

@@ -32,13 +32,13 @@ int main() {
     vmStack.topFrame->operandStack->pushDouble(2.71828182845);
     vmStack.topFrame->operandStack->pushRef(nullptr);
 
-    Log::info("%d", vmStack.topFrame->operandStack->popAndGetRef());
-    Log::info("%.11lf", vmStack.topFrame->operandStack->popAndGetDouble());
-    Log::info("%f", vmStack.topFrame->operandStack->popAndGetFloat());
-    Log::info("%lld", vmStack.topFrame->operandStack->popAndGetLong());
-    Log::info("%lld", vmStack.topFrame->operandStack->popAndGetLong());
-    Log::info("%d", vmStack.topFrame->operandStack->popAndGetInt());
-    Log::info("%d", vmStack.topFrame->operandStack->popAndGetInt());
+    Log::info("%d", vmStack.topFrame->operandStack->popRef());
+    Log::info("%.11lf", vmStack.topFrame->operandStack->popDouble());
+    Log::info("%f", vmStack.topFrame->operandStack->popFloat());
+    Log::info("%lld", vmStack.topFrame->operandStack->popLong());
+    Log::info("%lld", vmStack.topFrame->operandStack->popLong());
+    Log::info("%d", vmStack.topFrame->operandStack->popInt());
+    Log::info("%d", vmStack.topFrame->operandStack->popInt());
 
     vmStack.pop();
 

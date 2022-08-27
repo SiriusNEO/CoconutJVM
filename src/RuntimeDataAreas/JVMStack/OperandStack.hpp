@@ -5,7 +5,7 @@
 #pragma once
 
 
-#include "LocalVarTable.hpp"
+#include "LocalVariableTable.hpp"
 
 namespace coconut {
 
@@ -45,7 +45,7 @@ class OperandStack {
             up();
         }
 
-        int popAndGetInt() {
+        int popInt() {
             down();
             return int(slots[top].bytes);
         }
@@ -55,7 +55,7 @@ class OperandStack {
             up();
         }
 
-        float popAndGetFloat() {
+        float popFloat() {
             down();
             return *(float*)(&slots[top].bytes);
         }
@@ -69,7 +69,7 @@ class OperandStack {
             up();
         }
 
-        long long popAndGetLong() {
+        long long popLong() {
             down();
             long long high = (long long)(slots[top].bytes);
             down();
@@ -81,8 +81,8 @@ class OperandStack {
             pushLong(*(long long*)(&val));
         }
 
-        double popAndGetDouble() {
-            long long bits = popAndGetLong();
+        double popDouble() {
+            long long bits = popLong();
             return *(double*)(&bits);
         }
 
@@ -91,7 +91,7 @@ class OperandStack {
             up();
         }
 
-        Object* popAndGetRef() {
+        Object* popRef() {
             down();
             return slots[top].ref;
         }

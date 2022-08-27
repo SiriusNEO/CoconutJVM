@@ -8,7 +8,7 @@
 
 #include "../utils/panic.hpp"
 #include "../utils/typedef.hpp"
-#include <vector>
+
 
 namespace coconut {
 
@@ -22,6 +22,9 @@ class ByteReader {
         int startIdx;
         size_t poolSize;
 
+        // rust-like
+        bool   borrowFlag;
+
         void checkOverflow(int preReadNum) {
             if (startIdx + preReadNum > poolSize) {
                 panic("ByteReader bytePool overflow!");
@@ -31,10 +34,17 @@ class ByteReader {
     public:
         ByteReader(size_t _poolSize): startIdx(0), poolSize(_poolSize) {
             bytePool = new BYTE[poolSize];
+            borrowFlag = false;
+        }
+
+        ByteReader(size_t _poolSize, BYTE* _bytePool): startIdx(0), poolSize(_poolSize), bytePool(_bytePool) {
+            borrowFlag = true;
         }
 
         ~ByteReader() {
-            delete[] bytePool;
+            if (!borrowFlag) {
+                delete[] bytePool;
+            }
         }
 
         bool good() {
@@ -56,6 +66,18 @@ class ByteReader {
             return (uint32_t(fetchU2()) << 16) | uint32_t(fetchU2());
         }
 
+        int8_t fetchInt8() {
+            return int8_t(fetchU1());
+        }
+
+        int16_t fetchInt16() {
+            return int16_t(fetchU2());
+        }
+
+        int32_t fetchInt32() {
+            return int32_t(fetchU4());
+        }
+
         uint64_t fetchU8() {
             checkOverflow(8);
             return (uint64_t(fetchU4()) << 32) | uint64_t(fetchU4());
@@ -65,6 +87,13 @@ class ByteReader {
             checkOverflow(byteNum);
             for (size_t i = 0; i < byteNum; ++i) {
                 buffer.push_back((BYTE)fetchU1());
+            }
+        }
+
+        void fetchBytes(size_t byteNum, BYTE* buffer) {
+            checkOverflow(byteNum);
+            for (size_t i = 0; i < byteNum; ++i) {
+                buffer[i] = ((BYTE)fetchU1());
             }
         }
 
