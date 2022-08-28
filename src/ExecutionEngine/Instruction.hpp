@@ -41,7 +41,7 @@ class FrameExecutor {
         }
 };
 
-struct InstWitoutOperand: public Instruction {
+struct InstWithoutOperand: public Instruction {
     void accept(ByteReader* reader) {
         // do nothing
     }
@@ -52,6 +52,29 @@ struct InstWithOffset: public Instruction {
 
     void accept(ByteReader* reader) {
         offset = int(reader->fetchInt16());
+    }
+};
+
+struct InstWithIndex: public Instruction {
+    unsigned int index;
+    bool preset;
+
+    InstWithIndex(unsigned int _index, bool _preset) : index(_index), preset(_preset) {
+        // if _preset is true, arg _index is meaningless
+    }
+
+    void accept(ByteReader* reader) {
+        if (!preset) {
+            index = (unsigned int)(reader->fetchU1());
+        }
+    }
+};
+
+struct InstWithWideIndex: public Instruction {
+    unsigned int index;
+
+    void accept(ByteReader* reader) {
+        index = (unsigned int)(reader->fetchU2());
     }
 };
 

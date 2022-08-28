@@ -10,19 +10,19 @@
 
 namespace coconut {
 
-struct Inst_nop: public InstWitoutOperand {
+struct Inst_nop: public InstWithoutOperand {
     void accept(FrameExecutor* executor) {
         // do nothing
     }
 };
 
-struct Inst_aconst_null: public InstWitoutOperand {
+struct Inst_aconst_null: public InstWithoutOperand {
     void accept(FrameExecutor* executor) {
         executor->frame->operandStack->pushRef(nullptr);
     }
 };
 
-struct Inst_iconst: public InstWitoutOperand {
+struct Inst_iconst: public InstWithoutOperand {
     int val;
 
     Inst_iconst(int _val): val(_val) {}
@@ -32,7 +32,7 @@ struct Inst_iconst: public InstWitoutOperand {
     }
 };
 
-struct Inst_lconst: public InstWitoutOperand {
+struct Inst_lconst: public InstWithoutOperand {
     long long val;
 
     Inst_lconst(long long _val): val(_val) {}
@@ -42,7 +42,7 @@ struct Inst_lconst: public InstWitoutOperand {
     }
 };
 
-struct Inst_fconst: public InstWitoutOperand {
+struct Inst_fconst: public InstWithoutOperand {
     float val;
 
     Inst_fconst(float _val): val(_val) {}
@@ -52,7 +52,7 @@ struct Inst_fconst: public InstWitoutOperand {
     }
 };
 
-struct Inst_dconst: public InstWitoutOperand {
+struct Inst_dconst: public InstWithoutOperand {
     double val;
 
     Inst_dconst(double _val): val(_val) {}

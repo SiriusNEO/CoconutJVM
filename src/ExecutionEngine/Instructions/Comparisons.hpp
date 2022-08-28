@@ -11,7 +11,7 @@
 
 namespace coconut {
 
-struct Inst_lcmp: public InstWitoutOperand {
+struct Inst_lcmp: public InstWithoutOperand {
     void accept(FrameExecutor* executor) {
         long long value1 = executor->frame->operandStack->popLong(), 
                   value2 = executor->frame->operandStack->popLong();
@@ -21,7 +21,7 @@ struct Inst_lcmp: public InstWitoutOperand {
     }
 };
 
-struct Inst_fcmp: public InstWitoutOperand {
+struct Inst_fcmp: public InstWithoutOperand {
     bool is_g;
 
     Inst_fcmp(bool _is_g) : is_g(_is_g) {}
@@ -44,7 +44,7 @@ struct Inst_fcmp: public InstWitoutOperand {
     }
 };
 
-struct Inst_dcmp: public InstWitoutOperand {
+struct Inst_dcmp: public InstWithoutOperand {
     bool is_g;
 
     Inst_dcmp(bool _is_g) : is_g(_is_g) {}
@@ -67,7 +67,7 @@ struct Inst_dcmp: public InstWitoutOperand {
     }
 };
 
-enum CmpOp {eq, ne, lt, ge, gt, le};
+enum CmpOp {EQ, NE, LT, GE, GT, LE};
 
 struct Inst_if: public InstWithOffset {
     CmpOp op;
@@ -79,12 +79,12 @@ struct Inst_if: public InstWithOffset {
         bool succeed = false;
 
         switch (op) {
-            case eq: succeed = (value == 0); break;
-            case ne: succeed = (value != 0); break;
-            case lt: succeed = (value < 0); break;
-            case ge: succeed = (value >= 0); break;
-            case gt: succeed = (value > 0); break;
-            case le: succeed = (value <= 0); break;
+            case EQ: succeed = (value == 0); break;
+            case NE: succeed = (value != 0); break;
+            case LT: succeed = (value < 0); break;
+            case GE: succeed = (value >= 0); break;
+            case GT: succeed = (value > 0); break;
+            case LE: succeed = (value <= 0); break;
         }
 
         if (succeed) {
@@ -104,12 +104,12 @@ struct Inst_if_icmp: public InstWithOffset {
         bool succeed = false;
 
         switch (op) {
-            case eq: succeed = (value1 == value2); break;
-            case ne: succeed = (value1 != value2); break;
-            case lt: succeed = (value1 < value2); break;
-            case ge: succeed = (value1 >= value2); break;
-            case gt: succeed = (value1 > value2); break;
-            case le: succeed = (value1 <= value2); break;
+            case EQ: succeed = (value1 == value2); break;
+            case NE: succeed = (value1 != value2); break;
+            case LT: succeed = (value1 < value2); break;
+            case GE: succeed = (value1 >= value2); break;
+            case GT: succeed = (value1 > value2); break;
+            case LE: succeed = (value1 <= value2); break;
         }
 
         if (succeed) {
@@ -129,8 +129,8 @@ struct Inst_if_acmp: public InstWithOffset {
         bool succeed = false;
 
         switch (op) {
-            case eq: succeed = (value1 == value2); break;
-            case ne: succeed = (value1 != value2); break;
+            case EQ: succeed = (value1 == value2); break;
+            case NE: succeed = (value1 != value2); break;
             default: /*not appear*/ break;
         }
 
