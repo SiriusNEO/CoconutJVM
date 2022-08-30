@@ -11,7 +11,9 @@
 
 ```
 
-A toy JVM (Java Virtual Machine). Just for learning purpose.
+A toy JVM (Java Virtual Machine) written in C++. For learning purpose.
+
+Support Java version:  ![](https://img.shields.io/badge/JDK-8-red?logo=OpenJDK)
 
 ## About
 

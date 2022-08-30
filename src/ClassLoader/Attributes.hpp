@@ -6,6 +6,7 @@
 #pragma once
 
 #include "ConstantPool.hpp"
+#include "../utils/instanceof.hpp"
 
 namespace coconut {
 
@@ -45,6 +46,8 @@ struct AttributeInfo {
 
 AttributeInfo* attributeInfoFactory(ByteReader& reader, ConstantPool* cp);
 
+struct CodeAttr;
+
 struct Attributes {
     uint16_t attributesNum;
     AttributeInfo** list;
@@ -64,6 +67,15 @@ struct Attributes {
             delete list[i];
         delete [] list;
     }
+
+    CodeAttr* filtCodeAttr() {
+        for (int i = 0; i < attributesNum; ++i) {
+            if (cocotools::instanceof<CodeAttr>(list[i])) {
+                return (CodeAttr*)list[i];
+            }
+        }
+        return nullptr;
+    }
 };
 
 struct ExceptionTableEntry {
@@ -77,6 +89,7 @@ struct CodeAttr: public AttributeInfo {
     ConstantPool*  cp;
     uint16_t       maxStack;
     uint16_t       maxLocals;
+    uint32_t       codeLen;
     BYTE*          code;
     std::vector<ExceptionTableEntry> exceptionTable;
     Attributes*    attributes;
@@ -85,7 +98,7 @@ struct CodeAttr: public AttributeInfo {
         maxStack = reader.fetchU2();
         maxLocals = reader.fetchU2();
 
-        uint32_t codeLen = reader.fetchU4();
+        codeLen = reader.fetchU4();
         code = new BYTE[codeLen];
         reader.fetchBytes(codeLen, code);
 

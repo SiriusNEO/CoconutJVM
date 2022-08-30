@@ -20,7 +20,7 @@ struct Instruction {
 
     virtual ~Instruction() {}
 
-    virtual void accept(ByteReader* decoder) = 0;
+    virtual void accept(ByteReader* reader) = 0;
 
     virtual void accept(FrameExecutor* executor) = 0;
 };
@@ -32,7 +32,9 @@ class FrameExecutor {
     public:
         StackFrame*     frame;
 
-        void visit(Instruction* inst) {
+        FrameExecutor(Thread* _thread, StackFrame* _frame): thread(_thread), frame(_frame) {}
+
+        void execute(Instruction* inst) {
             inst->accept(this);
         }
 

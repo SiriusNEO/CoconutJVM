@@ -40,6 +40,16 @@ class OperandStack {
             delete[] slots;
         }
 
+        void pushSlot(Slot slot) {
+            slots[top] = slot;
+            up();
+        }
+
+        Slot popSlot() {
+            down();
+            return slots[top];
+        }
+
         void pushInt(int val) {
             slots[top].bytes = val;
             up();

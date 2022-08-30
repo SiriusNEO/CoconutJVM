@@ -38,7 +38,7 @@ struct FieldInfo {
 
     std::string fieldName() const {
         return cp->getLiteral(nameIdx);
-    } 
+    }
 
     ~FieldInfo() {
         if (attributes != nullptr) delete attributes;

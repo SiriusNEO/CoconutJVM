@@ -16,7 +16,7 @@
 #include "Cmdline.hpp"
 #include "utils/log.hpp"
 #include "ClassLoader/FileLoader.hpp"
-#include "ClassLoader/ClassInfo.hpp"
+#include "ExecutionEngine/Interpreter.hpp"
 
 using namespace coconut;
 using namespace cocotools;

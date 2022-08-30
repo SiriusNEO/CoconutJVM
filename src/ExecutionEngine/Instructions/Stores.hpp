@@ -10,9 +10,9 @@
 
 namespace coconut {
 
-struct INS_istore: public InstWithIndex {
+struct Inst_istore: public InstWithIndex {
 
-    INS_istore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_istore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->localVariableTable->setInt(
@@ -21,9 +21,9 @@ struct INS_istore: public InstWithIndex {
     }
 };
 
-struct INS_lstore: public InstWithIndex {
+struct Inst_lstore: public InstWithIndex {
 
-    INS_lstore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_lstore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->localVariableTable->setLong(
@@ -32,9 +32,9 @@ struct INS_lstore: public InstWithIndex {
     }
 };
 
-struct INS_fstore: public InstWithIndex {
+struct Inst_fstore: public InstWithIndex {
 
-    INS_fstore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_fstore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->localVariableTable->setFloat(
@@ -43,9 +43,9 @@ struct INS_fstore: public InstWithIndex {
     }
 };
 
-struct INS_dstore: public InstWithIndex {
+struct Inst_dstore: public InstWithIndex {
 
-    INS_dstore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_dstore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->localVariableTable->setDouble(
@@ -54,9 +54,9 @@ struct INS_dstore: public InstWithIndex {
     }
 };
 
-struct INS_astore: public InstWithIndex {
+struct Inst_astore: public InstWithIndex {
 
-    INS_astore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_astore(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->localVariableTable->setRef(
@@ -65,7 +65,7 @@ struct INS_astore: public InstWithIndex {
     }
 };
 
-struct INS_iastore: public InstWithoutOperand {
+struct Inst_iastore: public InstWithoutOperand {
 
     void accept(FrameExecutor* executor) {
         int value = executor->frame->operandStack->popInt();

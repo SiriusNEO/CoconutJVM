@@ -10,9 +10,9 @@
 
 namespace coconut {
 
-struct INS_iload: public InstWithIndex {
+struct Inst_iload: public InstWithIndex {
 
-    INS_iload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_iload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->operandStack->pushInt(
@@ -21,9 +21,9 @@ struct INS_iload: public InstWithIndex {
     }
 };
 
-struct INS_lload: public InstWithIndex {
+struct Inst_lload: public InstWithIndex {
 
-    INS_lload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_lload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->operandStack->pushLong(
@@ -32,9 +32,9 @@ struct INS_lload: public InstWithIndex {
     }
 };
 
-struct INS_fload: public InstWithIndex {
+struct Inst_fload: public InstWithIndex {
 
-    INS_fload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_fload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->operandStack->pushFloat(
@@ -43,9 +43,9 @@ struct INS_fload: public InstWithIndex {
     }
 };
 
-struct INS_dload: public InstWithIndex {
+struct Inst_dload: public InstWithIndex {
 
-    INS_dload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_dload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->operandStack->pushDouble(
@@ -54,9 +54,9 @@ struct INS_dload: public InstWithIndex {
     }
 };
 
-struct INS_aload: public InstWithIndex {
+struct Inst_aload: public InstWithIndex {
 
-    INS_aload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
+    Inst_aload(unsigned int _index, bool _preset): InstWithIndex(_index, _preset) {}
 
     void accept(FrameExecutor* executor) {
         executor->frame->operandStack->pushRef(
@@ -65,7 +65,7 @@ struct INS_aload: public InstWithIndex {
     }
 };
 
-struct INS_iaload: public InstWithoutOperand {
+struct Inst_iaload: public InstWithoutOperand {
 
     void accept(FrameExecutor* executor) {
         int index = executor->frame->operandStack->popInt();
