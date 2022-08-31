@@ -16,6 +16,8 @@
 #include "Instructions/Stack.hpp"
 #include "Instructions/Stores.hpp"
 
+#include "../utils/Log.hpp"
+
 
 #pragma once
 
@@ -37,6 +39,8 @@ class BytecodeDecoder {
 
         // call new. remember to delete
         Instruction* instructionFactory(uint8_t opcode) {
+            cocotools::Log::info("build inst: 0x%x", opcode);
+
             switch (opcode) {
                 // Constants
                 case 0x00: return new Inst_nop();
@@ -224,6 +228,7 @@ class BytecodeDecoder {
                 case 0xaf: // return new dreturn();
                 case 0xb0: // return new areturn();
                 case 0xb1: // return new return();
+                panic("Unimplemented");
                 // References
                 /* 0xb2 ~ 0xc3 */
                 case 0xc4: return new Inst_wide(getInst());

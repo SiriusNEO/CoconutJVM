@@ -99,8 +99,8 @@ struct Inst_if_icmp: public InstWithOffset {
     Inst_if_icmp(CmpOp _op): op(_op) {}
 
     void accept(FrameExecutor* executor) {
-        int value1 = executor->frame->operandStack->popInt(),
-            value2 = executor->frame->operandStack->popInt();
+        int value2 = executor->frame->operandStack->popInt(),
+            value1 = executor->frame->operandStack->popInt();
         bool succeed = false;
 
         switch (op) {
@@ -124,8 +124,8 @@ struct Inst_if_acmp: public InstWithOffset {
     Inst_if_acmp(CmpOp _op): op(_op) {}
 
     void accept(FrameExecutor* executor) {
-        Object *value1 = executor->frame->operandStack->popRef(),
-               *value2 = executor->frame->operandStack->popRef();
+        Object *value2 = executor->frame->operandStack->popRef(),
+               *value1 = executor->frame->operandStack->popRef();
         bool succeed = false;
 
         switch (op) {

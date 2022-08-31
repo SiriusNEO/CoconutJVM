@@ -12,14 +12,15 @@ namespace coconut {
 using namespace cocotools;
 
 class OperandStack {
-    private:
+    // private:
+    public:
         Slot*         slots;
         unsigned int  top;
         unsigned int  maxStack;
 
         void up() {
             ++top;
-            if (top >= maxStack) {
+            if (top > maxStack) {
                 panic("OperandStack overflow!");
             }
         }
@@ -27,7 +28,7 @@ class OperandStack {
         void down() {
             --top;
             if (top < 0) {
-                panic("OperandStack overflow!");
+                panic("OperandStack underflow!");
             }
         }
     
@@ -39,6 +40,10 @@ class OperandStack {
         ~OperandStack() {
             delete[] slots;
         }
+
+        Slot getSlot(int index) {
+            return slots[index];
+        } 
 
         void pushSlot(Slot slot) {
             slots[top] = slot;

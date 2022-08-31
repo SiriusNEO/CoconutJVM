@@ -7,6 +7,7 @@
 
 #include "../utils/ByteReader.hpp"
 #include "../utils/typedef.hpp"
+#include "../utils/Log.hpp"
 
 // for executor
 #include "../RuntimeDataAreas/Thread.hpp"

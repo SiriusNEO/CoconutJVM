@@ -28,14 +28,14 @@ struct Inst_iarith: public InstWithoutOperand {
     Inst_iarith(ArithmOp _op): op(_op) {}
 
     void accept(FrameExecutor* executor) {
-        int value1 = executor->frame->operandStack->popInt();
+        int value2 = executor->frame->operandStack->popInt();
         int result;
         
         if (op == NEG) {
-            result = -value1;
+            result = -value2;
         }
         else {
-            int value2 = executor->frame->operandStack->popInt();
+            int value1 = executor->frame->operandStack->popInt();
             switch (op) {
                 case ADD: result = value1 + value2; break;
                 case SUB: result = value1 - value2; break;
@@ -68,14 +68,14 @@ struct Inst_larith: public InstWithoutOperand {
     Inst_larith(ArithmOp _op): op(_op) {}
 
     void accept(FrameExecutor* executor) {
-        long long value1 = executor->frame->operandStack->popLong();
+        long long value2 = executor->frame->operandStack->popLong();
         long long result;
         
         if (op == NEG) {
-            result = -value1;
+            result = -value2;
         }
         else {
-            long long value2 = executor->frame->operandStack->popLong();
+            long long value1 = executor->frame->operandStack->popLong();
             switch (op) {
                 case ADD: result = value1 + value2; break;
                 case SUB: result = value1 - value2; break;
@@ -108,14 +108,14 @@ struct Inst_farith: public InstWithoutOperand {
     Inst_farith(ArithmOp _op): op(_op) {}
 
     void accept(FrameExecutor* executor) {
-        float value1 = executor->frame->operandStack->popFloat();
+        float value2 = executor->frame->operandStack->popFloat();
         float result;
         
         if (op == NEG) {
-            result = -value1;
+            result = -value2;
         }
         else {
-            float value2 = executor->frame->operandStack->popFloat();
+            float value1 = executor->frame->operandStack->popFloat();
             switch (op) {
                 case ADD: result = value1 + value2; break;
                 case SUB: result = value1 - value2; break;
@@ -139,14 +139,14 @@ struct Inst_darith: public InstWithoutOperand {
     Inst_darith(ArithmOp _op): op(_op) {}
 
     void accept(FrameExecutor* executor) {
-        double value1 = executor->frame->operandStack->popDouble();
+        double value2 = executor->frame->operandStack->popDouble();
         double result;
         
         if (op == NEG) {
-            result = -value1;
+            result = -value2;
         }
         else {
-            double value2 = executor->frame->operandStack->popDouble();
+            double value1 = executor->frame->operandStack->popDouble();
             switch (op) {
                 case ADD: result = value1 + value2; break;
                 case SUB: result = value1 - value2; break;

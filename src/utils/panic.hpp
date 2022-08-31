@@ -11,7 +11,7 @@
 
 namespace cocotools {
 
-void panic(const char* format, ...) {
+static void panic(const char* format, ...) {
     printf("coconut panic: ");
 
     va_list v_args;

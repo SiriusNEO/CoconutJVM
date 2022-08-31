@@ -37,7 +37,11 @@ int main(int argc, char *argv[]) {
     fileLoader.loadClassFile(cmd.mainClassName, classFileReader.bytePool);
     ClassInfo classInfo(classFileReader);
     classInfo.display();
-    Log::info("jvm end");
+    Log::info("ClassLoader end.");
+
+    // Interpreter
+    Interpreter interpreter;
+    interpreter.interpret(classInfo.methods[1]);
 
     return 0;
 }
