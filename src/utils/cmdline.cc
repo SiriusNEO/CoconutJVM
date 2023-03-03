@@ -18,6 +18,11 @@ namespace coconut {
 
 namespace utils {
 
+void commandLinePanic(const char* what) {
+  printf("%s\n", what);
+  exit(1);
+}
+
 CommandOptions::CommandOptions(int argc, char* argv[])
     : classPath(DEFAULT_CP), mainClassName(DEFAULT_MAINCN), args() {
   if (argc <= 1) {

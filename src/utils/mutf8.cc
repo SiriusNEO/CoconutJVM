@@ -25,6 +25,8 @@ std::string utf16fromBytes(utf16_t* bytes, size_t size) {
   return std::string(utf8_bc, utf8_bc + utf8_size);
 }
 
+void _decodeError() { LOG(FATAL) << "mutf8 decode error"; }
+
 std::string decodeMUTF8FromBytes(const std::vector<BYTE>& bytesStream) {
   // Notice: this only support utf-8
   // return std::string(bytesStream.begin(), bytesStream.end());
@@ -43,25 +45,25 @@ std::string decodeMUTF8FromBytes(const std::vector<BYTE>& bytesStream) {
       utf16_buffer[utf16_size++] = b1;
     } else if ((b1 >> 5) == 0b110) {
       if (ptr >= bytesStream.size()) {
-        DECODE_ERROR();
+        _decodeError();
       }
       utf16_t b2 = bytesStream[ptr++];
       if ((b2 >> 6) != 0b10) {
-        DECODE_ERROR();
+        _decodeError();
       }
       utf16_buffer[utf16_size++] = (((b1 & 0x1f) << 6) | (b2 & 0x3f));
     } else if ((b1 >> 4) == 0b1110) {
       if (ptr + 1 >= bytesStream.size()) {
-        DECODE_ERROR();
+        _decodeError();
       }
       utf16_t b2 = bytesStream[ptr++], b3 = bytesStream[ptr++];
       if ((b2 >> 6) != 0b10 || (b3 >> 6) != 0b10) {
-        DECODE_ERROR();
+        _decodeError();
       }
       utf16_buffer[utf16_size++] =
           (((b1 & 0x0f) << 12) | ((b2 & 0x3f) << 6) | (b3 & 0x3f));
     } else {
-      DECODE_ERROR();
+      _decodeError();
     }
   }
 

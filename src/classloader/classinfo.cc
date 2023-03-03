@@ -34,7 +34,7 @@ ClassInfo::ClassInfo(utils::ByteReader& reader)
   CHECK(majorVersion >= 45 && majorVersion <= 52)
       << "java.lang.UnsupportedClassVersionError!";
   // from 46, minor version is deprecated
-  CHECK(majorVersion < 46 || minorVersion != 0)
+  CHECK(majorVersion < 46 || minorVersion == 0)
       << "java.lang.UnsupportedClassVersionError!";
 
   /*

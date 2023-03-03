@@ -20,7 +20,7 @@ namespace rtda {
 
 void JVMStack::push(unsigned int maxLocals, unsigned int maxStack) {
   // TODO: Made it a Java exception (StackOverflowError).
-  CHECK(size >= capacity_) << "java.lang.StackOverflowError";
+  CHECK(size < capacity_) << "java.lang.StackOverflowError";
   if (isEmpty()) {
     topFrame = new StackFrame(maxLocals, maxStack, nullptr);
   } else {

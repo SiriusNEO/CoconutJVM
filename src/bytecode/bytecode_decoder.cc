@@ -20,7 +20,8 @@ namespace bytecode {
 
 Instruction* BytecodeDecoder::instructionFactory(uint8_t opcode) {
   // Good for debugging in hex format
-  LOG(INFO) << "build inst: 0x" << std::hex << opcode << std::dec;
+  LOG(INFO) << "build inst: 0x" << std::hex << static_cast<unsigned int>(opcode)
+            << std::dec;
 
   switch (opcode) {
     // Constants
@@ -378,7 +379,9 @@ Instruction* BytecodeDecoder::instructionFactory(uint8_t opcode) {
     // Reserved
     /* 0xca ~ 0xff */
     default:
-      LOG(FATAL) << "JVM decode error";
+      LOG(FATAL) << "JVM decode error when decoding opcode: 0x" << std::hex
+                 << static_cast<unsigned int>(opcode) << std::dec;
+      ;
   }
 
   // to eliminate warning

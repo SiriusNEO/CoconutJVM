@@ -18,6 +18,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <zip/zip.h>
 
 #include <cstring>
 #include <fstream>
@@ -26,7 +27,6 @@
 #include <string>
 #include <vector>
 
-#include "../../3rdparty/zip/zip.h"
 #include "../utils/logging.h"
 #include "../utils/misc.h"
 #include "../utils/typedef.h"

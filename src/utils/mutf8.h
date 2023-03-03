@@ -16,10 +16,11 @@
 #ifndef SRC_UTILS_MUTF8_H_
 #define SRC_UTILS_MUTF8_H_
 
+#include <utf16/converter.h>
+
 #include <string>
 #include <vector>
 
-#include "../../3rdparty/utf16/converter.h"
 #include "logging.h"
 #include "typedef.h"
 
@@ -39,7 +40,7 @@ std::string utf16fromBytes(utf16_t* bytes, size_t size);
  * \brief Raise mutf8 decode error.
  * \throw mutf8 decode error.
  */
-void DECODE_ERROR() { LOG(FATAL) << "mutf8 decode error"; }
+void _decodeError();
 
 /*!
  * \brief Decode mutf8 string from bytes.

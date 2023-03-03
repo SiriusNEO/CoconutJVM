@@ -34,7 +34,7 @@ class ByteReader {
  public:
   /*! \brief The cursor of the reader. Indicate the position in the memory pool
    * where the reader is in. */
-  int cursor;
+  unsigned int cursor;
 
   /*! \brief The memory pool. */
   BYTE* bytePool;
@@ -52,7 +52,8 @@ class ByteReader {
    * \param preReadNum Estimated numbers of bytes which will be read.
    */
   void checkOverflow_(int preReadNum) {
-    CHECK(cursor + preReadNum > poolSize_) << "ByteReader bytePool overflow!";
+    CHECK(cursor + preReadNum <= static_cast<int>(poolSize_))
+        << "ByteReader bytePool overflow!";
   }
 
  public:

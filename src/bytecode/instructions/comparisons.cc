@@ -97,7 +97,7 @@ void Inst_if::accept(FrameExecutor* executor) {
   }
 
   if (succeed) {
-    executor->branch(offset);
+    executor->branch(offset_);
   }
 }
 
@@ -128,7 +128,7 @@ void Inst_if_icmp::accept(FrameExecutor* executor) {
   }
 
   if (succeed) {
-    executor->branch(offset);
+    executor->branch(offset_);
   }
 }
 
@@ -150,7 +150,7 @@ void Inst_if_acmp::accept(FrameExecutor* executor) {
   }
 
   if (succeed) {
-    executor->branch(offset);
+    executor->branch(offset_);
   }
 }
 

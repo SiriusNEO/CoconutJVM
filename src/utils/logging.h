@@ -33,11 +33,10 @@ constexpr const char* kJVM_IERROR_MSG =
     "Please check the source code for detailed reason. \n"
     "---------------------------------------------------------------\n";
 
-class JVMLogException : public std::exception {
+class JVMPanic : public std::exception {
  public:
-  JVMLogException(const std::string& file, int lineno,
-                  const std::string& message)
-      : message_(kJVM_IERROR_MSG + file + ": " + std::to_string(lineno) + ": " +
+  JVMPanic(const std::string& file, int lineno, const std::string& message)
+      : message_(kJVM_IERROR_MSG + file + ":" + std::to_string(lineno) + ": " +
                  message) {}
 
   virtual const char* what() const noexcept { return message_.c_str(); }
@@ -45,8 +44,6 @@ class JVMLogException : public std::exception {
  private:
   std::string message_;
 };
-
-auto LOG_LEVEL_LIST = {"INFO", "DEBUG", "WARNING", "ERROR", "FATAL"};
 
 #define kJVM_LOG_INFO "INFO"
 #define kJVM_LOG_DEBUG "DEBUG"
@@ -63,6 +60,8 @@ class LogMessage {
  public:
   LogMessage(const std::string& file, int lineno, const std::string& level)
       : file_(file), lineno_(lineno) {
+    static auto LOG_LEVEL_LIST = {"INFO", "DEBUG", "WARNING", "ERROR", "FATAL"};
+
     for (const auto& valid_level : LOG_LEVEL_LIST) {
       if (valid_level == level) {
         level_ = valid_level;
@@ -70,20 +69,24 @@ class LogMessage {
       }
     }
     if (level_.empty()) {
-      throw JVMLogException(file, lineno, "Invalid Log Level: " + level);
+      throw JVMPanic(file, lineno, "Invalid Log Level: " + level);
     }
   }
 
-  ~LogMessage() throw(JVMLogException) {
+  ~LogMessage() noexcept(false) {
     std::time_t time = std::time(nullptr);
     std::ostringstream info;
     info << "[" << std::put_time(std::localtime(&time), "%H:%M:%S") << "] "
-         << file_ << ":" << lineno_ << ": " << stream_.str() << std::endl;
+         << file_ << ":" << lineno_ << ": "
+         << "["
+         << "Coconut LOG " << level_ << "] " << stream_.str() << std::endl;
     if (level_ == kJVM_LOG_FATAL) {
-      std::cerr << info.str();
-      throw JVMLogException(file_, lineno_, stream_.str());
+      // std::cerr << info.str();
+      // In coconut JVM, we directly use the FATAL log as the internal panic of
+      // the JVM.
+      throw JVMPanic(file_, lineno_, stream_.str());
     } else {
-      std::cout << info.str() << std::endl;
+      std::cout << info.str();
     }
   }
 

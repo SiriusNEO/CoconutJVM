@@ -31,10 +31,7 @@ namespace utils {
 #define DEFAULT_JREPATH "./"
 
 /*! \brief Error in command line. */
-void commandLinePanic(const char* what) {
-  printf("%s\n", what);
-  exit(1);
-}
+void commandLinePanic(const char* what);
 
 /*!
  * \brief Wrapper for commandline options.
