@@ -7,13 +7,13 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classloader/file_loader.h
+ * \file src/classfile/file_loader.h
  * \brief FileLoader, from local loading java class file ([]bytes) into memory.
  * \author SiriusNEO
  */
 
-#ifndef SRC_CLASSLOADER_FILE_LOADER_H_
-#define SRC_CLASSLOADER_FILE_LOADER_H_
+#ifndef SRC_CLASSFILE_FILE_LOADER_H_
+#define SRC_CLASSFILE_FILE_LOADER_H_
 
 #include <dirent.h>
 #include <sys/stat.h>
@@ -33,7 +33,7 @@
 
 namespace coconut {
 
-namespace classloader {
+namespace classfile {
 
 /*!
  * \brief FileLoader, from local loading java class file ([]bytes) into memory.
@@ -82,7 +82,7 @@ class FileLoader {
      * \param buf The byte pool we want to write the content to.
      * \return The total size of this class file (bytes).
      */
-    int loadClassFile(const std::string& className, BYTE* buf);
+    int loadClassFileBytes(const std::string& className, BYTE* buf);
 
    private:
     size_t MAX_BUF_SIZE = 1073741824;  // 1GB
@@ -131,11 +131,11 @@ class FileLoader {
    * \param buf The byte pool we want to write the content to.
    * \return The total size of this class file (bytes). -1 if load failed.
    */
-  int loadClassFile(const std::string& className, BYTE* buf);
+  int loadClassFileBytes(const std::string& className, BYTE* buf);
 };
 
-}  // namespace classloader
+}  // namespace classfile
 
 }  // namespace coconut
 
-#endif  // SRC_CLASSLOADER_FILE_LOADER_H_
+#endif  // SRC_CLASSFILE_FILE_LOADER_H_

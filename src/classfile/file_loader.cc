@@ -7,7 +7,7 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classloader/file_loader.cc
+ * \file src/classfile/file_loader.cc
  * \brief Implementation of file_loader.h
  * \author SiriusNEO
  */
@@ -16,7 +16,7 @@
 
 namespace coconut {
 
-namespace classloader {
+namespace classfile {
 
 FileLoader::FileEntry::FileEntry(const std::string& _path)
     : path(_path), openFlag(false) {
@@ -52,8 +52,8 @@ void FileLoader::FileEntry::open() {
   openFlag = true;
 }
 
-int FileLoader::FileEntry::loadClassFile(const std::string& className,
-                                         BYTE* buf) {
+int FileLoader::FileEntry::loadClassFileBytes(const std::string& className,
+                                              BYTE* buf) {
   CHECK(openFlag) << "File loader error: Read in closed entry.";
 
   std::string classLocation = className;
@@ -152,14 +152,14 @@ FileLoader::FileLoader(const std::string& prefix, const std::string& path) {
   }
 }
 
-int FileLoader::loadClassFile(const std::string& className, BYTE* buf) {
+int FileLoader::loadClassFileBytes(const std::string& className, BYTE* buf) {
   for (auto& entry : entries) {
-    int ret = entry.loadClassFile(className, buf);
+    int ret = entry.loadClassFileBytes(className, buf);
     if (ret > 0) return ret;
   }
   return -1;
 }
 
-}  // namespace classloader
+}  // namespace classfile
 
 }  // namespace coconut

@@ -16,7 +16,7 @@
 #define SRC_VM_INTERPRETER_H_
 
 #include "../bytecode/bytecode_decoder.h"
-#include "../classloader/classinfo.h"
+#include "../classfile/classfile.h"
 
 namespace coconut {
 
@@ -57,7 +57,7 @@ class Interpreter {
    * \brief Interpret a method.
    * \param  methodInfo The info of the method we want to interpret.
    */
-  void interpret(classloader::MethodInfo& methodInfo);
+  void interpret(classfile::MethodInfo& methodInfo);
 };
 
 }  // namespace vm

@@ -7,18 +7,18 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classloader/classinfo.cc
- * \brief Implementation of classinfo.h
+ * \file src/classfile/classfile.cc
+ * \brief Implementation of classfile.h
  * \author SiriusNEO
  */
 
-#include "classinfo.h"
+#include "classfile.h"
 
 namespace coconut {
 
-namespace classloader {
+namespace classfile {
 
-ClassInfo::ClassInfo(utils::ByteReader& reader)
+ClassFile::ClassFile(utils::ByteReader& reader)
     : cp(nullptr), attributes(nullptr) {
   /*
    *  1. check magic number
@@ -82,9 +82,9 @@ ClassInfo::ClassInfo(utils::ByteReader& reader)
   attributes = new Attributes(reader, cp);
 }
 
-void ClassInfo::display() const {
+void ClassFile::display() const {
   std::ostringstream s;
-  s << "--- [ClassInfo] ---\n"
+  s << "--- [classfile] ---\n"
     << "Version: " << uint32_t(majorVersion) << "." << uint32_t(minorVersion)
     << "\n"
     << "Constant Pool: total " << uint32_t(cp->infoNum) << "\n"
@@ -109,6 +109,6 @@ void ClassInfo::display() const {
   LOG(INFO) << s.str();
 }
 
-}  // namespace classloader
+}  // namespace classfile
 
 }  // namespace coconut

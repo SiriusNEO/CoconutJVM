@@ -7,20 +7,20 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classloader/attributes.h
+ * \file src/classfile/attributes.h
  * \brief Attributes and AttributeInfo in Java lang.
  * \author SiriusNEO
  */
 
-#ifndef SRC_CLASSLOADER_ATTRIBUTES_H_
-#define SRC_CLASSLOADER_ATTRIBUTES_H_
+#ifndef SRC_CLASSFILE_ATTRIBUTES_H_
+#define SRC_CLASSFILE_ATTRIBUTES_H_
 
 #include "../utils/misc.h"
 #include "constant_pool.h"
 
 namespace coconut {
 
-namespace classloader {
+namespace classfile {
 
 /*! \brief Positions of attributes in the list. */
 const int POS_Code = 0;
@@ -249,8 +249,8 @@ struct UnimplementedAttr : public AttributeInfo {
   }
 };
 
-}  // namespace classloader
+}  // namespace classfile
 
 }  // namespace coconut
 
-#endif  // SRC_CLASSLOADER_ATTRIBUTES_H_
+#endif  // SRC_CLASSFILE_ATTRIBUTES_H_

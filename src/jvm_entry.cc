@@ -34,7 +34,7 @@
  *     https://github.com/Davipb/utf8-utf16-converter
  */
 
-#include "classloader/file_loader.h"
+#include "classfile/file_loader.h"
 #include "utils/cmdline.h"
 #include "utils/logging.h"
 #include "vm/interpreter.h"
@@ -54,18 +54,18 @@ int main(int argc, char *argv[]) {
   LOG(INFO) << "JRE Path: " << cmd.jrePath.c_str();
 
   // Load Classes
-  classloader::FileLoader fileLoader(cmd.jrePath, cmd.classPath);
+  classfile::FileLoader fileLoader(cmd.jrePath, cmd.classPath);
   utils::ByteReader classFileReader(MAX_CLASSFILE_SIZE);
-  fileLoader.loadClassFile(cmd.mainClassName, classFileReader.bytePool);
-  classloader::ClassInfo classInfo(classFileReader);
+  fileLoader.loadClassFileBytes(cmd.mainClassName, classFileReader.bytePool);
+  classfile::ClassFile classFile(classFileReader);
 
   // check the class info
-  classInfo.display();
-  LOG(INFO) << "ClassLoader end.";
+  classFile.display();
+  LOG(INFO) << "Class file loaded successfully.";
 
   // interpret the program
   vm::Interpreter interpreter;
-  interpreter.interpret(classInfo.methods[1]);
+  interpreter.interpret(classFile.methods[1]);
 
   return 0;
 }

@@ -7,19 +7,19 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classloader/classinfo.h
- * \brief ClassInfo: contains all information about one single Java class.
+ * \file src/classfile/ClassFile.h
+ * \brief ClassFile: contains all information about one single Java class.
  * \author SiriusNEO
  */
 
-#ifndef SRC_CLASSLOADER_CLASSINFO_H_
-#define SRC_CLASSLOADER_CLASSINFO_H_
+#ifndef SRC_CLASSFILE_CLASSFILE_H_
+#define SRC_CLASSFILE_CLASSFILE_H_
 
 #include "attributes.h"
 
 namespace coconut {
 
-namespace classloader {
+namespace classfile {
 
 /*! \brief Java class file magic number: cafe babe. */
 const int JAVA_CLASS_MAGIC = 0xCAFEBABE;
@@ -61,12 +61,13 @@ struct FieldInfo {
 typedef FieldInfo MethodInfo;
 
 /*!
- * \brief ClassInfo in Java: the information of a total class file.
+ * \brief ClassFile in Java: the information of a total class file.
  *
  * It contains the total information of a java class.
- * We implement the "classloader" in the constructor of ClassInfo, that is,
- * converting bytes to a ClassInfo.
- * With file loader (file_loader.h), we get a complete class loader of our JVM.
+ * We implement the "classfile loader" in the constructor of ClassFile, that is,
+ * converting bytes to a ClassFile.
+ * With file loader (file_loader.h), we get a complete classfile loader of our
+ * JVM.
  *
  * A complete Java class has the following information:
  *  magic                 uint32
@@ -81,7 +82,7 @@ typedef FieldInfo MethodInfo;
  *  methods               FieldsInfo[]
  *  attributes            AttributeInfo[]
  */
-class ClassInfo {
+class ClassFile {
  public:
   // uint32_t  magic        (no need to store)
   uint16_t minorVersion;
@@ -101,13 +102,13 @@ class ClassInfo {
   Attributes* attributes;
 
   /*!
-   * \brief Default constructor. Convert bytes into a ClassInfo.
+   * \brief Default constructor. Convert bytes into a ClassFile.
    * \param reader The byte reader.
    */
-  ClassInfo(utils::ByteReader& reader);
+  ClassFile(utils::ByteReader& reader);
 
   /*! \brief The default destructor. */
-  ~ClassInfo() {
+  ~ClassFile() {
     if (cp != nullptr) {
       delete cp;
     }
@@ -135,13 +136,13 @@ class ClassInfo {
   }
 
   /*!
-   * \brief Display the class info.
+   * \brief Display the class file.
    */
   void display() const;
 };
 
-}  // namespace classloader
+}  // namespace classfile
 
 }  // namespace coconut
 
-#endif  // SRC_CLASSLOADER_CLASSINFO_H_
+#endif  // SRC_CLASSFILE_CLASSFILE_H_

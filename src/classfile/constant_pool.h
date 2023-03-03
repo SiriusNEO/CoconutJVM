@@ -7,13 +7,13 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classloader/constant_pool.h
+ * \file src/classfile/constant_pool.h
  * \brief ConstantPool (Referring to JVM Standard).
  * \author SiriusNEO
  */
 
-#ifndef SRC_CLASSLOADER_CONSTANT_POOL_H_
-#define SRC_CLASSLOADER_CONSTANT_POOL_H_
+#ifndef SRC_CLASSFILE_CONSTANT_POOL_H_
+#define SRC_CLASSFILE_CONSTANT_POOL_H_
 
 #include "../utils/byte_reader.h"
 #include "../utils/mutf8.h"
@@ -21,7 +21,7 @@
 
 namespace coconut {
 
-namespace classloader {
+namespace classfile {
 
 /*! \brief Constant Pool tag. */
 const uint8_t CONSTANT_TAG_Utf8 = 1;
@@ -229,8 +229,8 @@ struct ConstantRefInfo : public ConstantInfo {
  */
 ConstantInfo* constantInfoFactory(utils::ByteReader& reader, ConstantPool* cp);
 
-}  // namespace classloader
+}  // namespace classfile
 
 }  // namespace coconut
 
-#endif  // SRC_CLASSLOADER_CONSTANT_POOL_H_
+#endif  // SRC_CLASSFILE_CONSTANT_POOL_H_

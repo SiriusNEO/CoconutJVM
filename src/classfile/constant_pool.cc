@@ -7,7 +7,7 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classloader/constant_pool.cc
+ * \file src/classfile/constant_pool.cc
  * \brief Implementation of constant_pool.h
  * \author SiriusNEO
  */
@@ -16,7 +16,7 @@
 
 namespace coconut {
 
-namespace classloader {
+namespace classfile {
 
 std::string ConstantPool::getLiteral(uint16_t utf8Idx) const {
   ConstantUtf8Info* info = static_cast<ConstantUtf8Info*>(infoList[utf8Idx]);
@@ -96,5 +96,5 @@ ConstantInfo* constantInfoFactory(utils::ByteReader& reader, ConstantPool* cp) {
   return nullptr;
 }
 
-}  // namespace classloader
+}  // namespace classfile
 }  // namespace coconut
