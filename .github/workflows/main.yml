@@ -1,6 +1,6 @@
 # CI for Coconut, using Github Actions.
 
-name: CIfmt
+name: Coconut-CI-Workflow
 
 on:
   push:
@@ -12,13 +12,13 @@ on:
 
 jobs:
   Ubuntu:
-    name: CI-run-ubuntu
+    name: Coconut-CI-Ubuntu
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Sources
+      - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Run clang-fmt
+      - name: Run clang-format
         shell: bash -l {0}
         run: >-
           bash scripts/clang_fmt_lint.sh --check-only
@@ -31,7 +31,7 @@ jobs:
           cmake ..
           make
 
-      - name: Run gtest
+      - name: Run GTest
         shell: bash -l {0}
         run: >-
           build/cocotest
