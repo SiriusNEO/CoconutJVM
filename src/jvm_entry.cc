@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
 
   // interpret the program
   vm::Interpreter interpreter;
-  interpreter.interpret(classFile.methods[1]);
+    interpreter.interpret(classFile.methods[1]);
 
   return 0;
 }
