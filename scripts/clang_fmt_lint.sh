@@ -13,8 +13,8 @@ fi
 if [ "$1" == "--check-only" ]
 then
     echo "Running Clang-Format (Check Only)"
-    find src/ -type f \( -name '*.h' -or -name '*.cc' \) -print | xargs clang-format-10 --sort-includes -i --dry-run -Werror
+    find src/ -type f \( -name '*.h' -or -name '*.cc' \) -print | xargs $CLANG_FORMAT --sort-includes -i --dry-run -Werror
 else
     echo "Running Clang-Format With modifying the source code"
-    find src/ -type f \( -name '*.h' -or -name '*.cc' \) -print | xargs clang-format-10 --sort-includes -i
+    find src/ -type f \( -name '*.h' -or -name '*.cc' \) -print | xargs $CLANG_FORMAT --sort-includes -i
 fi

@@ -15,15 +15,15 @@ jobs:
     name: CI-run-ubuntu
     runs-on: ubuntu-latest
     steps:
-      - name: CI checkout sources
+      - name: Checkout Sources
         uses: actions/checkout@v2
 
-      - name: CI run clang-fmt
+      - name: Run clang-fmt
         shell: bash -l {0}
         run: >-
           bash scripts/clang_fmt_lint.sh --check-only
 
-      - name: CI build sources
+      - name: Build sources
         shell: bash -l {0}
         run: >-
           mkdir build
@@ -31,7 +31,7 @@ jobs:
           cmake ..
           make
 
-      - name: CI run gtest
+      - name: Run gtest
         shell: bash -l {0}
         run: >-
           build/cocotest
