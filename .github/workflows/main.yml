@@ -25,7 +25,7 @@ jobs:
 
       - name: Build sources
         shell: bash -l {0}
-        run: >-
+        run: |
           mkdir build
           cd build
           cmake ..
