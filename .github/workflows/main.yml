@@ -23,11 +23,19 @@ jobs:
         run: >-
           bash scripts/clang_fmt_lint.sh --check-only
 
-      - name: Build sources and run GTest
+      - name: Install Google Test
+        working-directory: ${{github.workspace}}
+        shell: bash
+        run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make
+
+      - name: Build sources
         shell: bash -l {0}
         run: |
           mkdir build
           cd build
           cmake ..
           make
-          ./cocotest
+
+      - name: Run Google Test
+        shell: bash -l {0}
+        run: build/cocotest
