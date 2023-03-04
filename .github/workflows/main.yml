@@ -34,4 +34,4 @@ jobs:
       - name: Run GTest
         shell: bash -l {0}
         run: >-
-          build/cocotest
+          ./cocotest
