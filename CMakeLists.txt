@@ -15,6 +15,7 @@ file(GLOB_RECURSE SOURCES
         ${SRC_DIR}/classfile/*.cc
         ${SRC_DIR}/rtda/*.cc
         ${SRC_DIR}/utils/*.cc
+        ${SRC_DIR}/vm/*.cc
     )
 file(GLOB_RECURSE THIRD_PARTY ${THIRD_PARTY_DIR}/*.c)
 file(GLOB_RECURSE TESTS ${TEST_DIR}/*.cc)
