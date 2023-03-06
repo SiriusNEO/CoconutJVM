@@ -7,7 +7,7 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classfile/attributes.cc
+ * \file src/classloader/attributes.cc
  * \brief Implementation of attributes.h
  * \author SiriusNEO
  */
@@ -16,7 +16,7 @@
 
 namespace coconut {
 
-namespace classfile {
+namespace classloader {
 
 AttributeInfo* attributeInfoFactory(utils::ByteReader& reader,
                                     ConstantPool* cp) {
@@ -71,6 +71,6 @@ AttributeInfo* attributeInfoFactory(utils::ByteReader& reader,
   }
 }
 
-}  // namespace classfile
+}  // namespace classloader
 
 }  // namespace coconut

@@ -12,19 +12,7 @@
  * \author SiriusNEO
  */
 
-#include "../utils/logging.h"
 #include "inst_base.h"
-#include "instructions/comparisons.h"
-#include "instructions/constants.h"
-#include "instructions/control.h"
-#include "instructions/conversions.h"
-#include "instructions/extended.h"
-#include "instructions/loads.h"
-#include "instructions/math.h"
-#include "instructions/references.h"
-#include "instructions/reserved.h"
-#include "instructions/stack.h"
-#include "instructions/stores.h"
 
 #ifndef SRC_BYTECODE_BYTECODE_DECODER_H_
 #define SRC_BYTECODE_BYTECODE_DECODER_H_

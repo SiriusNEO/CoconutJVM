@@ -20,7 +20,12 @@
 
 typedef unsigned char BYTE;
 
+#include <cstring>
+#include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
+
+typedef std::vector<std::string> Strings;
 
 #endif  // SRC_UTILS_TYPEDEF_H_

@@ -3,16 +3,22 @@ project(coconut C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
-######################## File Globbin ########################
+######################## Name Setting ########################
 
 set(SRC_DIR src)
 set(THIRD_PARTY_DIR 3rdparty)
 set(TEST_DIR testing)
 set(ENTRY_FILE ${SRC_DIR}/jvm_entry.cc)
 
+set(LIB_NAME coconut_runtime)
+
+set(TEST_TARGET cocotest)
+
+######################## File Globbin ########################
+
 file(GLOB_RECURSE SOURCES
         ${SRC_DIR}/bytecode/*.cc
-        ${SRC_DIR}/classfile/*.cc
+        ${SRC_DIR}/classloader/*.cc
         ${SRC_DIR}/rtda/*.cc
         ${SRC_DIR}/utils/*.cc
         ${SRC_DIR}/vm/*.cc
@@ -27,16 +33,17 @@ file(GLOB_RECURSE TESTS ${TEST_DIR}/*.cc)
 # Otherwise, linking will throw error!
 set_source_files_properties(${THIRD_PARTY_DIR}/utf16/converter.c PROPERTIES LANGUAGE CXX)
 
-add_executable(${PROJECT_NAME} ${THIRD_PARTY} ${SOURCES} ${ENTRY_FILE})
+add_library(${LIB_NAME} STATIC ${THIRD_PARTY} ${SOURCES} )
+target_include_directories(${LIB_NAME} PRIVATE ${THIRD_PARTY_DIR})
+
+add_executable(${PROJECT_NAME} ${ENTRY_FILE})
+target_link_libraries(${PROJECT_NAME} ${LIB_NAME})
 target_compile_options(${PROJECT_NAME} PUBLIC -O2)
 target_include_directories(${PROJECT_NAME} PRIVATE ${THIRD_PARTY_DIR})
-target_include_directories(${PROJECT_NAME} PUBLIC ${SRC_DIR})
 
 ######################## Testing ########################
 
 # Using 'make cocotest' to make test
-
-set(TEST_TARGET cocotest)
 
 option(USE_GTEST "Use GoogleTest for C++ sanity tests" ON) # Whether to use GTest
 
@@ -54,7 +61,8 @@ if(GTEST_FOUND)
     # need to link pthread lib
     find_package(Threads)
 
-    add_executable(${TEST_TARGET} ${THIRD_PARTY} ${SOURCES} ${TESTS})
+    add_executable(${TEST_TARGET} ${TESTS})
+    target_link_libraries(${TEST_TARGET} ${LIB_NAME})
     target_link_libraries(${TEST_TARGET} gtest gtest_main)
     target_link_libraries(${TEST_TARGET} ${CMAKE_THREAD_LIBS_INIT})
     target_include_directories(${TEST_TARGET} PRIVATE ${THIRD_PARTY_DIR})

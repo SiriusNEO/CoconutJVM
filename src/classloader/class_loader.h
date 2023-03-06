@@ -1,5 +1,5 @@
 /*!
- *   ________  ________  ________  ________  ________   ___  ___  _________
+ *    ________  ________  ________  ________  ________   ___  ___  _________
  *   |\   ____\|\   __  \|\   ____\|\   __  \|\   ___  \|\  \|\  \|\___   ___\
  *   \ \  \___|\ \  \|\  \ \  \___|\ \  \|\  \ \  \\ \  \ \  \\\  \|___ \  \_|
  *    \ \  \    \ \  \\\  \ \  \    \ \  \\\  \ \  \\ \  \ \  \\\  \   \ \  \
@@ -7,31 +7,22 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/rtda/vmstack/local_variable_table.h
- * \brief JVM Local Variable Table.
+ * \file src/classloader/class_loader.h
+ * \brief JVM class loader.
  * \author SiriusNEO
  */
 
-#ifndef SRC_RTDA_VMSTACK_LOCAL_VARIABLE_TABLE_H_
-#define SRC_RTDA_VMSTACK_LOCAL_VARIABLE_TABLE_H_
-
-#include "../slot.h"
+#ifndef SRC_CLASSLOADER_CLASS_LOADER_H_
+#define SRC_CLASSLOADER_CLASS_LOADER_H_
 
 namespace coconut {
 
 namespace rtda {
 
-/*!
- * \brief Local Variable Table of JVM.
- *
- * It is in a frame of the JVM Stack. It stores values of local variables in
- * current scope. A slot is 32bit in JVM convention so long/double take two
- * slots.
- */
-typedef SlotList LocalVariableTable;
+class ClassLoader {};
 
 }  // namespace rtda
 
 }  // namespace coconut
 
-#endif  // SRC_RTDA_VMSTACK_LOCAL_VARIABLE_TABLE_H_
+#endif  // SRC_CLASSLOADER_CLASS_LOADER_H_

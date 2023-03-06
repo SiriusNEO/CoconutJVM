@@ -15,10 +15,7 @@
 #ifndef SRC_UTILS_CMDLINE_H_
 #define SRC_UTILS_CMDLINE_H_
 
-#include <cstdio>
-#include <cstring>
-#include <string>
-#include <vector>
+#include "typedef.h"
 
 namespace coconut {
 
@@ -54,7 +51,7 @@ class CommandOptions {
   std::string mainClassName;
 
   /*! \brief Args passed to the main class. */
-  std::vector<std::string> args;
+  Strings args;
 
   /*!
    * \brief Default constructor. Parse and wrap the command line.

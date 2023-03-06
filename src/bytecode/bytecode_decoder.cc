@@ -14,6 +14,19 @@
 
 #include "bytecode_decoder.h"
 
+#include "../utils/logging.h"
+#include "instructions/comparisons.h"
+#include "instructions/constants.h"
+#include "instructions/control.h"
+#include "instructions/conversions.h"
+#include "instructions/extended.h"
+#include "instructions/loads.h"
+#include "instructions/math.h"
+#include "instructions/references.h"
+#include "instructions/reserved.h"
+#include "instructions/stack.h"
+#include "instructions/stores.h"
+
 namespace coconut {
 
 namespace bytecode {

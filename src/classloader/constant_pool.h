@@ -7,13 +7,13 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classfile/constant_pool.h
+ * \file src/classloader/constant_pool.h
  * \brief ConstantPool (Referring to JVM Standard).
  * \author SiriusNEO
  */
 
-#ifndef SRC_CLASSFILE_CONSTANT_POOL_H_
-#define SRC_CLASSFILE_CONSTANT_POOL_H_
+#ifndef SRC_CLASSLOADER_CONSTANT_POOL_H_
+#define SRC_CLASSLOADER_CONSTANT_POOL_H_
 
 #include "../utils/byte_reader.h"
 #include "../utils/mutf8.h"
@@ -21,7 +21,7 @@
 
 namespace coconut {
 
-namespace classfile {
+namespace classloader {
 
 /*! \brief Constant Pool tag. */
 const uint8_t CONSTANT_TAG_Utf8 = 1;
@@ -40,7 +40,8 @@ const uint8_t CONSTANT_TAG_MethodType = 16;
 const uint8_t CONSTANT_TAG_InvokeDynamic = 18;
 
 /*! \brief Base class of all constant info. */
-struct ConstantInfo {
+class ConstantInfo {
+ public:
   uint8_t tag;
 
   ConstantInfo(uint8_t _tag) : tag(_tag) {}
@@ -65,7 +66,9 @@ class ConstantPool {
   /*! \brief Numer of constant info. */
   uint16_t infoNum;
 
-  /*! \brief The list of constant info in the pool. */
+  /*! \brief The list of constant info in the pool. Not use std::vector because
+   * we use the factory. Use ** we can allocate memory dynamically and it's
+   * memory-efficient. */
   ConstantInfo** infoList;
 
   /*!
@@ -112,7 +115,8 @@ class ConstantPool {
 };
 
 /*! \brief Constant info for an Int. */
-struct ConstantIntegerInfo : public ConstantInfo {
+class ConstantIntegerInfo : public ConstantInfo {
+ public:
   // int32
   int val;
 
@@ -123,7 +127,8 @@ struct ConstantIntegerInfo : public ConstantInfo {
 };
 
 /*! \brief Constant info for a Float. */
-struct ConstantFloatInfo : public ConstantInfo {
+class ConstantFloatInfo : public ConstantInfo {
+ public:
   // float 32
   float val;
 
@@ -134,7 +139,8 @@ struct ConstantFloatInfo : public ConstantInfo {
 };
 
 /*! \brief Constant info for a Long. */
-struct ConstantLongInfo : public ConstantInfo {
+class ConstantLongInfo : public ConstantInfo {
+ public:
   // long 64
   long long val;
 
@@ -145,7 +151,8 @@ struct ConstantLongInfo : public ConstantInfo {
 };
 
 /*! \brief Constant info for a Double. */
-struct ConstantDoubleInfo : public ConstantInfo {
+class ConstantDoubleInfo : public ConstantInfo {
+ public:
   // double 64
   double val;
 
@@ -156,7 +163,8 @@ struct ConstantDoubleInfo : public ConstantInfo {
 };
 
 /*! \brief Constant info for Utf8 literal. */
-struct ConstantUtf8Info : public ConstantInfo {
+class ConstantUtf8Info : public ConstantInfo {
+ public:
   // utf-8 readable string
   std::string val;
 
@@ -172,7 +180,8 @@ struct ConstantUtf8Info : public ConstantInfo {
 };
 
 /*! \brief Constant info for a String. */
-struct ConstantStringInfo : public ConstantInfo {
+class ConstantStringInfo : public ConstantInfo {
+ public:
   ConstantPool* cp;
   uint16_t literalIdx;
 
@@ -183,7 +192,8 @@ struct ConstantStringInfo : public ConstantInfo {
 };
 
 /*! \brief Constant info for class. */
-struct ConstantClassInfo : public ConstantInfo {
+class ConstantClassInfo : public ConstantInfo {
+ public:
   ConstantPool* cp;
   uint16_t nameIdx;
 
@@ -191,10 +201,13 @@ struct ConstantClassInfo : public ConstantInfo {
       : cp(_cp), ConstantInfo(CONSTANT_TAG_Class) {
     nameIdx = reader.fetchU2();
   }
+
+  std::string name() const { return cp->getLiteral(nameIdx); }
 };
 
 /*! \brief Constant info for name-and-type. */
-struct ConstantNameAndTypeInfo : public ConstantInfo {
+class ConstantNameAndTypeInfo : public ConstantInfo {
+ public:
   ConstantPool* cp;
   uint16_t nameIdx;
   uint16_t descriptorIdx;
@@ -207,7 +220,8 @@ struct ConstantNameAndTypeInfo : public ConstantInfo {
 };
 
 /*! \brief Constant info for Reference. */
-struct ConstantRefInfo : public ConstantInfo {
+class ConstantRefInfo : public ConstantInfo {
+ public:
   ConstantPool* cp;
   uint16_t classInfoIdx;
   uint16_t nameAndTypeInfoIdx;
@@ -216,6 +230,12 @@ struct ConstantRefInfo : public ConstantInfo {
       : cp(_cp), ConstantInfo(_tag) {
     classInfoIdx = reader.fetchU2();
     nameAndTypeInfoIdx = reader.fetchU2();
+  }
+
+  std::string className() const { return cp->getClassNameStr(classInfoIdx); }
+
+  std::pair<std::string, std::string> nameAndDescriptor() const {
+    return cp->getNameAndTypeStr(nameAndTypeInfoIdx);
   }
 };
 
@@ -229,8 +249,8 @@ struct ConstantRefInfo : public ConstantInfo {
  */
 ConstantInfo* constantInfoFactory(utils::ByteReader& reader, ConstantPool* cp);
 
-}  // namespace classfile
+}  // namespace classloader
 
 }  // namespace coconut
 
-#endif  // SRC_CLASSFILE_CONSTANT_POOL_H_
+#endif  // SRC_CLASSLOADER_CONSTANT_POOL_H_

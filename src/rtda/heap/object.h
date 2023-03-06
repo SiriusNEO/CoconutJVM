@@ -8,7 +8,7 @@
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
  * \file src/rtda/heap/object.h
- * \brief java.lang.Object.
+ * \brief java.lang.Object representation.
  * \author SiriusNEO
  */
 
