@@ -57,7 +57,7 @@ void FileEntry::open() {
 }
 
 int FileEntry::loadClassFileBytes(const std::string& className, BYTE* buf) {
-  CHECK(openFlag) << "File loader error: Read in closed entry.";
+  CHECK(openFlag) << "File loader error: Read in closed entry: " << path;
 
   std::string classLocation = className;
 
@@ -68,7 +68,7 @@ int FileEntry::loadClassFileBytes(const std::string& className, BYTE* buf) {
       }
     }
     classLocation += CLASS_SUFFIX;
-    LOG(INFO) << "read: %s", classLocation.c_str();
+    LOG(INFO) << "read: " << classLocation.c_str();
     int code = zip_entry_open(zip, classLocation.c_str());
     if (code < 0) {
       return -1;

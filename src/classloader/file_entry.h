@@ -12,12 +12,12 @@
  * \author SiriusNEO
  */
 
+#ifndef SRC_CLASSLOADER_FILE_ENTRY_H_
+#define SRC_CLASSLOADER_FILE_ENTRY_H_
+
 #include <zip/zip.h>
 
 #include "../utils/typedef.h"
-
-#ifndef SRC_CLASSLOADER_FILE_ENTRY_H_
-#define SRC_CLASSLOADER_FILE_ENTRY_H_
 
 namespace coconut {
 

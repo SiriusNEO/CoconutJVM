@@ -15,13 +15,21 @@
 #ifndef SRC_CLASSLOADER_CLASS_LOADER_H_
 #define SRC_CLASSLOADER_CLASS_LOADER_H_
 
+#include <unordered_map>
+
+#include "../rtda/class.h"
+
 namespace coconut {
 
-namespace rtda {
+namespace classloader {
 
-class ClassLoader {};
+class ClassLoader {
+ public:
+ private:
+  std::unordered_map<std::string, rtda::Class> loaded_class_;
+};
 
-}  // namespace rtda
+}  // namespace classloader
 
 }  // namespace coconut
 

@@ -7,7 +7,7 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/utils/cmdline.cc
+ * \file src/env/cmdline.cc
  * \brief Implementation of cmdline.h
  * \author SiriusNEO
  */
@@ -16,7 +16,7 @@
 
 namespace coconut {
 
-namespace utils {
+namespace env {
 
 void commandLinePanic(const char* what) {
   printf("%s\n", what);
@@ -58,7 +58,7 @@ CommandOptions::CommandOptions(int argc, char* argv[])
       if (i == argc) {
         commandLinePanic("error: --jre-path requires jre path specification");
       }
-      jrePath = std::string(argv[i]);
+      jreHome = std::string(argv[i]);
     } else if (mainClassName == DEFAULT_MAINCN) {
       // this must be the main class
       mainClassName = std::string(argv[i]);
@@ -69,6 +69,6 @@ CommandOptions::CommandOptions(int argc, char* argv[])
   }
 }
 
-}  // namespace utils
+}  // namespace env
 
 }  // namespace coconut

@@ -34,20 +34,26 @@ class FileLoader {
   static const int MAX_PATH_NUM = 10;
   static const char PATH_SEPARATOR = ':';
 
-  std::vector<FileEntry> entries;
+  std::string jreHome_;
+  std::string classpath_;
+
+  std::vector<FileEntry> libEntries_;
+  std::vector<FileEntry> extEntries_;
+  std::vector<FileEntry> entries_;
 
  public:
   /*!
    * \brief Default constructor.
    *
-   * Because we usually have some environment settings saying JRE_PATH, here we
-   * set a "prefix" to represent the root we start. So the file will be searched
-   * in the path: prefix+path.
+   * The file will be searched in the following three paths:
+   * - {jreHome}/jre/
+   * - {jreHome}/jre/ext/
+   * - classpath
    *
-   * \param prefix The prefix of the path, that is, the "jre path" of Java env.
-   * \param path The path, that is, the "classpath" of JVM.
+   * \param jreHome The jreHome path of Java env.
+   * \param classpath The classpath of JVM specified by user.
    */
-  FileLoader(const std::string& prefix, const std::string& path);
+  FileLoader(const std::string& jreHome, const std::string& classpath);
 
   /*!
    * \brief Load a single class file from a prepared file loader.
@@ -56,6 +62,12 @@ class FileLoader {
    * \return The total size of this class file (bytes). -1 if load failed.
    */
   int loadClassFileBytes(const std::string& className, BYTE* buf);
+
+ private:
+  void initEntriesByClasspath(const std::string& classpath);
+
+  void unpackWildcardPath(std::vector<FileEntry>& fromEntries,
+                          std::vector<FileEntry>& toEntries);
 };
 
 }  // namespace classloader

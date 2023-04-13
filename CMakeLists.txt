@@ -19,6 +19,7 @@ set(TEST_TARGET cocotest)
 file(GLOB_RECURSE SOURCES
         ${SRC_DIR}/bytecode/*.cc
         ${SRC_DIR}/classloader/*.cc
+        ${SRC_DIR}/env/*.cc
         ${SRC_DIR}/rtda/*.cc
         ${SRC_DIR}/utils/*.cc
         ${SRC_DIR}/vm/*.cc

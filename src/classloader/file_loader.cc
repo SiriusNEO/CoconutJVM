@@ -14,8 +14,7 @@
 
 #include "file_loader.h"
 
-#include <dirent.h>
-
+#include "../env/path.h"
 #include "../utils/logging.h"
 #include "../utils/misc.h"
 
@@ -23,9 +22,41 @@ namespace coconut {
 
 namespace classloader {
 
-FileLoader::FileLoader(const std::string& prefix, const std::string& path) {
+FileLoader::FileLoader(const std::string& jreHome, const std::string& classpath)
+    : jreHome_(env::configJreHome(jreHome)),
+      classpath_(env::configClasspath(classpath)) {
+  // user-specified classpath
+  initEntriesByClasspath(classpath_);
+}
+
+int FileLoader::loadClassFileBytes(const std::string& className, BYTE* buf) {
+  int ret;
+
+  // load from lib/*
+  for (auto& entry : libEntries_) {
+    ret = entry.loadClassFileBytes(className, buf);
+    if (ret > 0) return ret;
+  }
+
+  // load from lib/ext/*
+  for (auto& entry : extEntries_) {
+    ret = entry.loadClassFileBytes(className, buf);
+    if (ret > 0) return ret;
+  }
+
+  // load from entries of classpath
+  for (auto& entry : entries_) {
+    ret = entry.loadClassFileBytes(className, buf);
+    if (ret > 0) return ret;
+  }
+
+  // load failed
+  return -1;
+}
+
+void FileLoader::initEntriesByClasspath(const std::string& classpath) {
   Strings singlePaths;
-  utils::split(path, PATH_SEPARATOR, singlePaths);
+  utils::split(classpath, PATH_SEPARATOR, singlePaths);
 
   CHECK(singlePaths.size() <= MAX_PATH_NUM)
       << "File loader error: Too much paths";
@@ -33,14 +64,59 @@ FileLoader::FileLoader(const std::string& prefix, const std::string& path) {
   std::vector<FileEntry> tmpEntries;
   // construct entries
   for (const std::string& singlePath : singlePaths) {
-    tmpEntries.push_back(FileEntry(prefix + singlePath));
+    tmpEntries.push_back(FileEntry(singlePath));
   }
 
   // unpack wildcard entries
   std::vector<FileEntry> tmpEntries1;
-  while (!tmpEntries.empty()) {
-    FileEntry lastEntry = tmpEntries.back();
-    tmpEntries.pop_back();
+  unpackWildcardPath(tmpEntries, tmpEntries1);
+
+  // remove the redundant entries
+  while (!tmpEntries1.empty()) {
+    FileEntry lastEntry = tmpEntries1.back();
+    tmpEntries1.pop_back();
+
+    bool hasEqual = false;
+    for (const auto& entry : entries_) {
+      if (entry == lastEntry) {
+        hasEqual = true;
+        break;
+      }
+    }
+
+    if (!hasEqual) {
+      entries_.push_back(lastEntry);
+    }
+  }
+
+  tmpEntries.push_back(FileEntry(jreHome_ + "/lib/*"));
+  unpackWildcardPath(tmpEntries, libEntries_);
+  for (auto& entry : libEntries_) {
+    entry.open();
+    LOG(INFO) << "Lib Entry. Path=" << entry.path.c_str()
+              << " Type=" << entry.type;
+  }
+
+  tmpEntries.push_back(FileEntry(jreHome_ + "/lib/ext/*"));
+  unpackWildcardPath(tmpEntries, extEntries_);
+  for (auto& entry : extEntries_) {
+    entry.open();
+    LOG(INFO) << "Ext Entry. Path=" << entry.path.c_str()
+              << " Type=" << entry.type;
+  }
+
+  for (auto& entry : entries_) {
+    entry.open();
+    LOG(INFO) << "Classpath Entry. Path=" << entry.path.c_str()
+              << " Type=" << entry.type;
+  }
+}
+
+void FileLoader::unpackWildcardPath(std::vector<FileEntry>& fromEntries,
+                                    std::vector<FileEntry>& toEntries) {
+  while (!fromEntries.empty()) {
+    FileEntry lastEntry = fromEntries.back();
+    fromEntries.pop_back();
 
     if (lastEntry.type == FileEntry::WILDCARD) {
       // WILDCARD: unpack all .jar files
@@ -52,45 +128,14 @@ FileLoader::FileLoader(const std::string& prefix, const std::string& path) {
         if (nowFn.size() > 4 &&
             (nowFn.substr(nowFn.size() - 4, nowFn.size()) == ".jar" ||
              nowFn.substr(nowFn.size() - 4, nowFn.size()) == ".JAR")) {
-          tmpEntries1.push_back(FileEntry(prefix + lastEntry.path + nowFn));
+          toEntries.push_back(FileEntry(lastEntry.path + nowFn));
         }
       }
       closedir(wildcardDir);
     } else {
-      tmpEntries1.push_back(lastEntry);
+      toEntries.push_back(lastEntry);
     }
   }
-
-  // remove the redundant entries
-  while (!tmpEntries1.empty()) {
-    FileEntry lastEntry = tmpEntries1.back();
-    tmpEntries1.pop_back();
-
-    bool hasEqual = false;
-    for (const auto& entry : entries) {
-      if (entry == lastEntry) {
-        hasEqual = true;
-        break;
-      }
-    }
-
-    if (!hasEqual) {
-      entries.push_back(lastEntry);
-    }
-  }
-
-  for (auto& entry : entries) {
-    entry.open();
-    LOG(INFO) << "Entry. Path=" << entry.path.c_str() << " Type=" << entry.type;
-  }
-}
-
-int FileLoader::loadClassFileBytes(const std::string& className, BYTE* buf) {
-  for (auto& entry : entries) {
-    int ret = entry.loadClassFileBytes(className, buf);
-    if (ret > 0) return ret;
-  }
-  return -1;
 }
 
 }  // namespace classloader
