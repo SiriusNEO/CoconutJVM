@@ -42,6 +42,23 @@ Constant* constantFactory(const classloader::ConstantInfo* info,
   return nullptr;  // elimnaite warning: -Wreturn-type
 }
 
+ConstantPool::ConstantPool(Class* _belong,
+                           const classloader::ConstantPool* filePool)
+    : belong(_belong) {
+  constants = new Constant*[filePool->cpCount];
+
+  int constCount = 0;
+  for (int i = 0; i < static_cast<int>(filePool->cpCount); ++i) {
+    if (filePool->infoList[i] == nullptr) {
+      continue;
+    }
+    constants[constCount++] = constantFactory(filePool->infoList[i], this);
+  }
+
+  CHECK(constCount == filePool->cpCount)
+      << "internal error when constructing runtime constant pool.";
+}
+
 }  // namespace rtda
 
 }  // namespace coconut

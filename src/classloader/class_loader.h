@@ -17,7 +17,8 @@
 
 #include <unordered_map>
 
-#include "../rtda/class.h"
+#include "../rtda/heap/class.h"
+#include "file_loader.h"
 
 namespace coconut {
 
@@ -25,8 +26,29 @@ namespace classloader {
 
 class ClassLoader {
  public:
+  explicit ClassLoader(FileLoader* fileLoader) : fileLoader_(fileLoader) {}
+
+  rtda::Class* loadClass(std::string className);
+
+  rtda::Class defineClass(utils::ByteReader& byteReader);
+
+  void link(rtda::Class* thisClass) {
+    this->verifyClass(thisClass);
+    this->prepareForClass(thisClass);
+    // TODO: resolution
+  }
+
  private:
-  std::unordered_map<std::string, rtda::Class> loaded_class_;
+  static const int MAX_CLASS_DATA_SIZE = 4 * 1024;  // 4 KB
+
+  FileLoader* fileLoader_;
+  std::unordered_map<std::string, rtda::Class> loadedClass_;
+
+  void verifyClass(rtda::Class* thisClass) {
+    // TODO: implement JVM verify algorithm
+  }
+
+  void prepareForClass(rtda::Class* thisClass) {}
 };
 
 }  // namespace classloader

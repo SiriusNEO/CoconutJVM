@@ -58,11 +58,10 @@ class ConstantInfo {
  * Java class file.
  */
 class ConstantPool {
- private:
-  /*! \brief Max number of info allocated for constant pool. */
-  uint16_t cpCount_;
-
  public:
+  /*! \brief Max number of info allocated for constant pool. */
+  uint16_t cpCount;
+
   /*! \brief Numer of constant info. */
   uint16_t infoNum;
 
@@ -75,15 +74,15 @@ class ConstantPool {
    * \brief Default constructor.
    * \param cpCount Max number of info allocated for constant pool.
    */
-  ConstantPool(uint16_t cpCount) : infoNum(0), cpCount_(cpCount) {
-    infoList = new ConstantInfo*[cpCount_];
-    for (int i = 0; i < cpCount_; ++i) infoList[i] = nullptr;
+  ConstantPool(uint16_t cpCount) : infoNum(0), cpCount(cpCount) {
+    infoList = new ConstantInfo*[cpCount];
+    for (int i = 0; i < cpCount; ++i) infoList[i] = nullptr;
   }
 
   /*! \brief Default destructor. */
   ~ConstantPool() {
     if (infoList != nullptr) {
-      for (int i = 0; i < cpCount_; ++i)
+      for (int i = 0; i < cpCount; ++i)
         if (infoList[i] != nullptr) {
           delete infoList[i];
         }

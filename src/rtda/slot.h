@@ -17,11 +17,13 @@
 
 #include "../utils/logging.h"
 #include "../utils/typedef.h"
-#include "heap/object.h"
 
 namespace coconut {
 
 namespace rtda {
+
+// pre-declare Object to avoid cycle reference.
+class Object;
 
 /*! \brief A slot in the table is 32bit. */
 typedef uint32_t Slot32;

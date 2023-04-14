@@ -41,7 +41,13 @@ class Member {
         belong(nullptr) {}
 };
 
-typedef Member Field;
+class Field : Member {
+ public:
+  unsigned int slotId;
+
+  explicit Field(const classloader::MemberInfo& info)
+      : Member(info), slotId(0) {}
+};
 
 class Method : Member {
  public:
@@ -77,15 +83,18 @@ class Class {
   // methods
   std::vector<Method> methods;
 
-  // interfaces
-  Strings interfaceNames;
+  // super class & interfaces
+  Class* superClass;
+  std::vector<Class*> interfaces;
 
   // class file info
   uint16_t accessFlags;
   ConstantPool* cp;
 
   explicit Class(const classloader::ClassFile& file)
-      : name(file.className()), accessFlags(file.accessFlags) {}
+      : name(file.className()), accessFlags(file.accessFlags) {
+    cp = new ConstantPool(this, file.cp);
+  }
 };
 
 }  // namespace rtda

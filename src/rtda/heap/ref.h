@@ -41,22 +41,22 @@ class SymbolicRef : public Constant {
 
 class ClassRef : public SymbolicRef {
  public:
-  Class* cachedClass;
+  Class* refClass;
 
   ClassRef(const classloader::ConstantClassInfo& info, ConstantPool* _cp)
-      : SymbolicRef(info.name(), _cp), cachedClass(nullptr) {}
+      : SymbolicRef(info.name(), _cp), refClass(nullptr) {}
 
   std::string className() const { return symbol_; }
 };
 
 class MemberRef : public SymbolicRef {
  public:
-  Class* cachedClass;
+  Class* belongClass;
   std::string memberName;
   std::string descriptor;
 
   MemberRef(const classloader::ConstantRefInfo& info, ConstantPool* _cp)
-      : SymbolicRef(info.className(), _cp), cachedClass(nullptr) {
+      : SymbolicRef(info.className(), _cp), belongClass(nullptr) {
     auto nameAndDescriptor = info.nameAndDescriptor();
     memberName = nameAndDescriptor.first;
     descriptor = nameAndDescriptor.second;
@@ -65,27 +65,27 @@ class MemberRef : public SymbolicRef {
 
 class FieldRef : public MemberRef {
  public:
-  Field* cachedField;
+  Field* field;
 
   FieldRef(const classloader::ConstantRefInfo& info, ConstantPool* _cp)
-      : MemberRef(info, _cp), cachedField(nullptr) {}
+      : MemberRef(info, _cp), field(nullptr) {}
 };
 
 class MethodRef : public MemberRef {
  public:
-  Method* cachedMethod;
+  Method* method;
 
   MethodRef(const classloader::ConstantRefInfo& info, ConstantPool* _cp)
-      : MemberRef(info, _cp), cachedMethod(nullptr) {}
+      : MemberRef(info, _cp), method(nullptr) {}
 };
 
 class InterfaceMethodRef : public MemberRef {
  public:
-  Method* cachedInterface;
+  Method* interfaceMethod;
 
   InterfaceMethodRef(const classloader::ConstantRefInfo& info,
                      ConstantPool* _cp)
-      : MemberRef(info, _cp), cachedInterface(nullptr) {}
+      : MemberRef(info, _cp), interfaceMethod(nullptr) {}
 };
 
 }  // namespace rtda

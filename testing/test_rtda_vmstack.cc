@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "../src/rtda/heap/object.h"
 #include "../src/rtda/vmstack/jvm_stack.h"
 
 // test local_variable_table
@@ -16,7 +17,7 @@ TEST(RTDA_VMSTACK, LocalVariableTable) {
   vmStack.topFrame->localVariableTable->setInt(2, -99);
   vmStack.topFrame->localVariableTable->setLong(3, 21474836470);
   vmStack.topFrame->localVariableTable->setDouble(5, 2.71828182845);
-  coconut::rtda::Object obj;
+  coconut::rtda::Object obj(10);
   vmStack.topFrame->localVariableTable->setRef(7, &obj);
 
   EXPECT_EQ(-99, vmStack.topFrame->localVariableTable->getInt(2));

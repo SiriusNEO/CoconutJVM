@@ -71,9 +71,12 @@ class ConstantPool {
   // Not use std::vector because we use the factory. Use ** we can allocate
   // memory dynamically and it's memory-efficient.
   Constant** constants;
+
+  ConstantPool(Class* _belong, const classloader::ConstantPool* filePool);
 };
 
-Constant* constantFactory(const classloader::ConstantInfo* info);
+Constant* constantFactory(const classloader::ConstantInfo* info,
+                          ConstantPool* cp);
 
 }  // namespace rtda
 
