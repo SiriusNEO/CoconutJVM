@@ -8,12 +8,15 @@
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
  * \file src/rtda/heap/object.h
- * \brief java.lang.Object.
+ * \brief java.lang.Object representation.
  * \author SiriusNEO
  */
 
 #ifndef SRC_RTDA_HEAP_OBJECT_H_
 #define SRC_RTDA_HEAP_OBJECT_H_
+
+#include "../slot.h"
+#include "class.h"
 
 namespace coconut {
 
@@ -21,11 +24,14 @@ namespace rtda {
 
 /*!
  * \brief java.lang.Object.
- *
- * Nothing here now. TODO: Support functionalities in JVM heap.
  */
 class Object {
-  // nothing now
+ public:
+  Class* objClass;
+  SlotList fields;
+
+  explicit Object(unsigned int capacity)
+      : objClass(nullptr), fields(capacity) {}
 };
 
 }  // namespace rtda

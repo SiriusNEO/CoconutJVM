@@ -7,20 +7,20 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classfile/attributes.h
+ * \file src/classloader/attributes.h
  * \brief Attributes and AttributeInfo in Java lang.
  * \author SiriusNEO
  */
 
-#ifndef SRC_CLASSFILE_ATTRIBUTES_H_
-#define SRC_CLASSFILE_ATTRIBUTES_H_
+#ifndef SRC_CLASSLOADER_ATTRIBUTES_H_
+#define SRC_CLASSLOADER_ATTRIBUTES_H_
 
 #include "../utils/misc.h"
 #include "constant_pool.h"
 
 namespace coconut {
 
-namespace classfile {
+namespace classloader {
 
 /*! \brief Positions of attributes in the list. */
 const int POS_Code = 0;
@@ -42,7 +42,8 @@ const std::string ATTRIBUTES_NAMES[] = {
 
 /*! \brief The attribute info. Record the position of name instead of name
  * string. */
-struct AttributeInfo {
+class AttributeInfo {
+ public:
   int namePos;
 
   AttributeInfo(int _namePos) : namePos(_namePos) {}
@@ -65,11 +66,15 @@ AttributeInfo* attributeInfoFactory(utils::ByteReader& reader,
                                     ConstantPool* cp);
 
 // pre-declare CodeAttr to avoid cycle reference.
-struct CodeAttr;
+class CodeAttr;
 
 /*! \brief Abstraction of a list of attribute infos. */
-struct Attributes {
+class Attributes {
+ public:
   uint16_t attributesNum;
+
+  // Not use std::vector because we use the factory. Use ** we can allocate
+  // memory dynamically and it's memory-efficient.
   AttributeInfo** list;
 
   Attributes(utils::ByteReader& reader, ConstantPool* cp) {
@@ -109,7 +114,8 @@ struct ExceptionTableEntry {
  * \brief The Code attribute.
  * \note It has some memory fields (code, attributes) to delete.
  */
-struct CodeAttr : public AttributeInfo {
+class CodeAttr : public AttributeInfo {
+ public:
   ConstantPool* cp;
   uint16_t maxStack;
   uint16_t maxLocals;
@@ -144,7 +150,8 @@ struct CodeAttr : public AttributeInfo {
 };
 
 /*! \brief The ConstantValue attribute. */
-struct ConstantValueAttr : public AttributeInfo {
+class ConstantValueAttr : public AttributeInfo {
+ public:
   uint16_t valueIdx;
 
   ConstantValueAttr(utils::ByteReader& reader)
@@ -154,12 +161,14 @@ struct ConstantValueAttr : public AttributeInfo {
 };
 
 /*! \brief The Deprecated attribute. */
-struct DeprecatedAttr : public AttributeInfo {
+class DeprecatedAttr : public AttributeInfo {
+ public:
   DeprecatedAttr() : AttributeInfo(POS_Deprecated) {}
 };
 
 /*! \brief The Exceptions attribute. */
-struct ExceptionsAttr : public AttributeInfo {
+class ExceptionsAttr : public AttributeInfo {
+ public:
   std::vector<uint16_t> exceptionIndexTable;
 
   ExceptionsAttr(utils::ByteReader& reader) : AttributeInfo(POS_Exceptions) {
@@ -168,7 +177,7 @@ struct ExceptionsAttr : public AttributeInfo {
 };
 
 /*! \brief The InnerClass attribute. */
-struct InnerClassesAttr : public AttributeInfo {
+class InnerClassesAttr : public AttributeInfo {
   // not implement
 };
 
@@ -179,7 +188,8 @@ struct LineNumberTableEntry {
 };
 
 /*! \brief The LineNumberTable attribute. */
-struct LineNumberTableAttr : public AttributeInfo {
+class LineNumberTableAttr : public AttributeInfo {
+ public:
   std::vector<LineNumberTableEntry> lineNumberTable;
 
   LineNumberTableAttr(utils::ByteReader& reader)
@@ -203,7 +213,8 @@ struct LocalVariableTableEntry {
 };
 
 /*! \brief The LocalVariableTable attribute. */
-struct LocalVariableTableAttr : public AttributeInfo {
+class LocalVariableTableAttr : public AttributeInfo {
+ public:
   std::vector<LocalVariableTableEntry> localVariableTable;
 
   LocalVariableTableAttr(utils::ByteReader& reader)
@@ -219,7 +230,8 @@ struct LocalVariableTableAttr : public AttributeInfo {
 };
 
 /*! \brief The SourceFile attribute. */
-struct SourceFileAttr : public AttributeInfo {
+class SourceFileAttr : public AttributeInfo {
+ public:
   ConstantPool* cp;
   uint16_t fileNameIdx;
 
@@ -232,13 +244,15 @@ struct SourceFileAttr : public AttributeInfo {
 };
 
 /*! \brief The Synthetic attribute. */
-struct SyntheticAttr : public AttributeInfo {
+class SyntheticAttr : public AttributeInfo {
+ public:
   SyntheticAttr() : AttributeInfo(POS_Synthetic) {}
 };
 
 /*! \brief Attributes which are unimplemented. Temporarily stored in this
  * structural. */
-struct UnimplementedAttr : public AttributeInfo {
+class UnimplementedAttr : public AttributeInfo {
+ public:
   std::string trueAttrName;
   uint32_t attrLen;
   std::vector<BYTE> info;
@@ -249,8 +263,8 @@ struct UnimplementedAttr : public AttributeInfo {
   }
 };
 
-}  // namespace classfile
+}  // namespace classloader
 
 }  // namespace coconut
 
-#endif  // SRC_CLASSFILE_ATTRIBUTES_H_
+#endif  // SRC_CLASSLOADER_ATTRIBUTES_H_

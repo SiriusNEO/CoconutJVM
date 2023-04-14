@@ -7,28 +7,25 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/utils/cmdline.h
+ * \file src/env/cmdline.h
  * \brief The command line tool for coconut JVM.
  * \author SiriusNEO
  */
 
-#ifndef SRC_UTILS_CMDLINE_H_
-#define SRC_UTILS_CMDLINE_H_
+#ifndef SRC_ENV_CMDLINE_H_
+#define SRC_ENV_CMDLINE_H_
 
-#include <cstdio>
-#include <cstring>
-#include <string>
-#include <vector>
+#include "../utils/typedef.h"
 
 namespace coconut {
 
-namespace utils {
+namespace env {
 
 #define VERSION "coconut 0.1dev"
 
 #define DEFAULT_CP "./"
 #define DEFAULT_MAINCN "Main.class"
-#define DEFAULT_JREPATH "./"
+#define DEFAULT_jreHome "./"
 
 /*! \brief Error in command line. */
 void commandLinePanic(const char* what);
@@ -45,7 +42,7 @@ void commandLinePanic(const char* what);
 class CommandOptions {
  public:
   /*! \brief jre path. not a standard rule. */
-  std::string jrePath;
+  std::string jreHome;
 
   /*! \brief classpath. */
   std::string classPath;
@@ -54,7 +51,7 @@ class CommandOptions {
   std::string mainClassName;
 
   /*! \brief Args passed to the main class. */
-  std::vector<std::string> args;
+  Strings args;
 
   /*!
    * \brief Default constructor. Parse and wrap the command line.
@@ -64,8 +61,8 @@ class CommandOptions {
   CommandOptions(int argc, char* argv[]);
 };
 
-}  // namespace utils
+}  // namespace env
 
 }  // namespace coconut
 
-#endif  // SRC_UTILS_CMDLINE_H_
+#endif  // SRC_ENV_CMDLINE_H_

@@ -18,8 +18,7 @@ namespace coconut {
 
 namespace utils {
 
-void split(const std::string& originStr, char delim,
-           std::vector<std::string>& ret) {
+void split(const std::string& originStr, char delim, Strings& ret) {
   for (int i = 0, j = 0; i < originStr.size();) {
     while (j < originStr.size() && originStr[j] != delim) ++j;
     ret.push_back(originStr.substr(i, j - i));

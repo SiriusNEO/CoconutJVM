@@ -7,25 +7,26 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classfile/ClassFile.h
+ * \file src/classloader/classfile.h
  * \brief ClassFile: contains all information about one single Java class.
  * \author SiriusNEO
  */
 
-#ifndef SRC_CLASSFILE_CLASSFILE_H_
-#define SRC_CLASSFILE_CLASSFILE_H_
+#ifndef SRC_CLASSLOADER_CLASSFILE_H_
+#define SRC_CLASSLOADER_CLASSFILE_H_
 
 #include "attributes.h"
 
 namespace coconut {
 
-namespace classfile {
+namespace classloader {
 
 /*! \brief Java class file magic number: cafe babe. */
 const int JAVA_CLASS_MAGIC = 0xCAFEBABE;
 
-/*! \brief Info of fields in Java. "Fields" here means members in the class. */
-struct FieldInfo {
+/*! \brief Info of members in Java. */
+class MemberInfo {
+ public:
   ConstantPool* cp;
   uint16_t accessFlags;
   uint16_t nameIdx;
@@ -33,7 +34,7 @@ struct FieldInfo {
 
   Attributes* attributes;
 
-  FieldInfo(utils::ByteReader& reader, ConstantPool* _cp) : cp(_cp) {
+  MemberInfo(utils::ByteReader& reader, ConstantPool* _cp) : cp(_cp) {
     accessFlags = reader.fetchU2();
     nameIdx = reader.fetchU2();
     descriptorIdx = reader.fetchU2();
@@ -41,7 +42,7 @@ struct FieldInfo {
     attributes = new Attributes(reader, cp);
   }
 
-  FieldInfo(FieldInfo&& other)
+  MemberInfo(MemberInfo&& other)
       : cp(other.cp),
         accessFlags(other.accessFlags),
         nameIdx(other.nameIdx),
@@ -50,15 +51,14 @@ struct FieldInfo {
     other.attributes = nullptr;
   }
 
-  std::string fieldName() const { return cp->getLiteral(nameIdx); }
+  std::string name() const { return cp->getLiteral(nameIdx); }
 
-  ~FieldInfo() {
+  std::string descriptor() const { return cp->getLiteral(descriptorIdx); }
+
+  ~MemberInfo() {
     if (attributes != nullptr) delete attributes;
   }
 };
-
-// MethodInfo is just an alias of FieldInfo.
-typedef FieldInfo MethodInfo;
 
 /*!
  * \brief ClassFile in Java: the information of a total class file.
@@ -96,8 +96,8 @@ class ClassFile {
   uint16_t superClass;
 
   std::vector<uint16_t> interfaces;
-  std::vector<FieldInfo> fields;
-  std::vector<MethodInfo> methods;
+  std::vector<MemberInfo> fields;
+  std::vector<MemberInfo> methods;
 
   Attributes* attributes;
 
@@ -141,8 +141,8 @@ class ClassFile {
   void display() const;
 };
 
-}  // namespace classfile
+}  // namespace classloader
 
 }  // namespace coconut
 
-#endif  // SRC_CLASSFILE_CLASSFILE_H_
+#endif  // SRC_CLASSLOADER_CLASSFILE_H_

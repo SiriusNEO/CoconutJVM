@@ -7,25 +7,27 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/utils/typedef.h
- * \brief Type definition of Coconut JVM.
+ * \file src/env/path.h
+ * \brief Path environment config & auto searching.
  * \author SiriusNEO
  */
 
-#ifndef SRC_UTILS_TYPEDEF_H_
-#define SRC_UTILS_TYPEDEF_H_
+#ifndef SRC_ENV_PATH_H_
+#define SRC_ENV_PATH_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <dirent.h>
 
-typedef unsigned char BYTE;
+#include "../utils/typedef.h"
 
-#include <cstring>
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
+namespace coconut {
 
-typedef std::vector<std::string> Strings;
+namespace env {
 
-#endif  // SRC_UTILS_TYPEDEF_H_
+std::string configJreHome(const std::string& jreHome) { return jreHome; }
+
+std::string configClasspath(const std::string& classpath) { return classpath; }
+
+}  // namespace env
+}  // namespace coconut
+
+#endif  // SRC_ENV_PATH_H_

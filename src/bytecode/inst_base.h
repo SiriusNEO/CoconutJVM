@@ -17,7 +17,6 @@
 
 #include "../rtda/thread.h"
 #include "../utils/byte_reader.h"
-#include "../utils/logging.h"
 #include "../utils/typedef.h"
 
 namespace coconut {
@@ -92,7 +91,7 @@ class InstWithoutOperand : public Instruction {
 };
 
 /*! \brief Base class for instructions with an int16 offset. */
-struct InstWithOffset : public Instruction {
+class InstWithOffset : public Instruction {
  protected:
   int offset_;
 

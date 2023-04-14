@@ -15,8 +15,7 @@
 #ifndef SRC_UTILS_MISC_H_
 #define SRC_UTILS_MISC_H_
 
-#include <string>
-#include <vector>
+#include "typedef.h"
 
 namespace coconut {
 
@@ -41,8 +40,7 @@ inline bool instanceof (const BaseClass* ptr) {
  * \param delim The delimiter character.
  * \param ret The vector to store the splitted strings.
  */
-void split(const std::string& originStr, char delim,
-           std::vector<std::string>& ret);
+void split(const std::string& originStr, char delim, Strings& ret);
 
 }  // namespace utils
 

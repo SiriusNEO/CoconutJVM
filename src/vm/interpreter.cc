@@ -41,11 +41,10 @@ void Interpreter::loop(rtda::Thread* thread) {
   }
 }
 
-void Interpreter::interpret(classfile::MethodInfo& methodInfo) {
-  LOG(INFO) << "Interpret method: %s", methodInfo.fieldName().c_str();
+void Interpreter::interpret(classloader::MemberInfo& methodInfo) {
+  LOG(INFO) << "Interpret method: %s", methodInfo.name().c_str();
 
-  classfile::CodeAttr* codeAttr = methodInfo.attributes->filtCodeAttr();
-
+  classloader::CodeAttr* codeAttr = methodInfo.attributes->filtCodeAttr();
   CHECK(codeAttr != nullptr) << "No CodeAttr found";
 
   // load code

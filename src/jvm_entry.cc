@@ -34,8 +34,8 @@
  *     https://github.com/Davipb/utf8-utf16-converter
  */
 
-#include "classfile/file_loader.h"
-#include "utils/cmdline.h"
+#include "classloader/file_loader.h"
+#include "env/cmdline.h"
 #include "utils/logging.h"
 #include "vm/interpreter.h"
 
@@ -46,18 +46,18 @@ using namespace coconut;
 
 // main entry
 int main(int argc, char *argv[]) {
-  utils::CommandOptions cmd(argc, argv);
+  env::CommandOptions cmd(argc, argv);
 
   // test command options
   LOG(INFO) << "Main Class: " << cmd.mainClassName.c_str();
+  LOG(INFO) << "JRE Home: " << cmd.jreHome.c_str();
   LOG(INFO) << "Class Path: " << cmd.classPath.c_str();
-  LOG(INFO) << "JRE Path: " << cmd.jrePath.c_str();
 
   // Load Classes
-  classfile::FileLoader fileLoader(cmd.jrePath, cmd.classPath);
+  classloader::FileLoader fileLoader(cmd.jreHome, cmd.classPath);
   utils::ByteReader classFileReader(MAX_CLASSFILE_SIZE);
   fileLoader.loadClassFileBytes(cmd.mainClassName, classFileReader.bytePool);
-  classfile::ClassFile classFile(classFileReader);
+  classloader::ClassFile classFile(classFileReader);
 
   // check the class info
   classFile.display();

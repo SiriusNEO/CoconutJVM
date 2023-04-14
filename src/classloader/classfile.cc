@@ -7,7 +7,7 @@
  *      \ \_______\ \_______\ \_______\ \_______\ \__\\ \__\ \_______\   \ \__\
  *       \|_______|\|_______|\|_______|\|_______|\|__| \|__|\|_______|    \|__|
  *
- * \file src/classfile/classfile.cc
+ * \file src/classloader/classfile.cc
  * \brief Implementation of classfile.h
  * \author SiriusNEO
  */
@@ -16,7 +16,7 @@
 
 namespace coconut {
 
-namespace classfile {
+namespace classloader {
 
 ClassFile::ClassFile(utils::ByteReader& reader)
     : cp(nullptr), attributes(nullptr) {
@@ -69,13 +69,13 @@ ClassFile::ClassFile(utils::ByteReader& reader)
    */
   uint16_t fieldCount = reader.fetchU2();
   for (uint16_t i = 0; i < fieldCount; ++i) {
-    fields.emplace_back(FieldInfo(reader, cp));
+    fields.emplace_back(MemberInfo(reader, cp));
   }
   LOG(INFO) << "fields finish";
 
   uint16_t methodCount = reader.fetchU2();
   for (uint16_t i = 0; i < methodCount; ++i) {
-    methods.emplace_back(FieldInfo(reader, cp));
+    methods.emplace_back(MemberInfo(reader, cp));
   }
   LOG(INFO) << "methods finish";
 
@@ -99,16 +99,16 @@ void ClassFile::display() const {
   s << "\n";
   s << "Fields: total " << uint32_t(fields.size()) << "\n";
   for (const auto& field : fields) {
-    s << "\t" << field.fieldName().c_str() << "\n";
+    s << "\t" << field.name().c_str() << "\n";
   }
   s << "Methods: total " << uint32_t(methods.size()) << "\n";
   for (const auto& method : methods) {
-    s << "\t" << method.fieldName().c_str() << "\n";
+    s << "\t" << method.name().c_str() << "\n";
   }
   // display
   LOG(INFO) << s.str();
 }
 
-}  // namespace classfile
+}  // namespace classloader
 
 }  // namespace coconut

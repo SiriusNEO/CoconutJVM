@@ -16,7 +16,7 @@
 #define SRC_RTDA_VMSTACK_OPERAND_STACK_H_
 
 #include "../../utils/logging.h"
-#include "slot.h"
+#include "../slot.h"
 
 namespace coconut {
 
